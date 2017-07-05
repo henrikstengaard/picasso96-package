@@ -1,0 +1,115 @@
+Picasso96 Printer Patch 1.11
+============================
+
+1. What does the patch do?
+
+The Amiga printer.device driver will always assume that the bitmap data it
+has to print is in a specific format. As it happens, the screens and windows
+which reside in a graphics card memory buffer may not be in the format the
+printer.device expects. Consequently, it will not print properly. The
+Picasso96 Printer Patch program tries to address this problem by converting
+the data to print into a format suitable for use with the Amiga printer.device.
+
+2. What else does the program do?
+
+High- and truecolour image data is automatically converted into a format
+suitable for output with the printer.device driver. The conversion also
+takes place for image data that uses a wider palette range than supported
+by the printer.device API: for the original Amiga printer.device, only
+up to 4096 colours per image can be used, a graphics card can allow up to
+24 million colours per image. The conversion process attempts to "fold"
+the picture's colour information into a 12 bit colour space. In order to
+do so, a colour reduction process needs to be applied which attempts to
+reproduce the original image as closely as the limited colour space allows.
+
+3. How does the patch work?
+
+The patch waits for somebody to open the Amiga printer.device driver. Once
+it opens, monitoring patches are installed which check for a bitmap printing
+command. When these patches hit upon such a command, they examine the type
+of the bitmap. If the bitmap is in a format understood by the Picasso96
+system (but not by the printer.device), a replacement bitmap will be created
+which will be in a format understood by printer.device. This very bitmap will
+then be forwarded to the printer.device in place of the original bitmap
+submitted to it.
+
+4. What else does the program need?
+
+The P96_PrinterPatch program requires an Amiga with MC68020 CPU (or better)
+and rather a lot of free memory. At 600 DPI, an A4 sized colour page will
+take up about 3 MBytes of memory. If you don't have enough room available
+to keep an entire page in memory, then P96_PrinterPatch will be unable to
+perform its job. Above all, P96_PrinterPatch needs the Picasso96 RTG system
+to read and decode the bitmap data.
+
+5. How to install the program?
+
+Just copy the P96_PrinterPatch program to your WBStartup drawer. That's all.
+
+6. How to stop the program?
+
+Just start the program again, it will automatically shut down and
+remove itself from memory. Note that if the program is currently printing,
+it may take a while for it to remove itself.
+
+7. How to configure the program?
+
+The program can be started both from Shell and from Workbench. In both
+cases you can configure two options which control how the resulting picture
+is generated:
+
+   REDUCE
+
+      This option controls whether the colour space reduction process should
+      take place or not. If enabled, the picture data is converted, trying to
+      retain as much colour information as possible before it is cropped to
+      the 12 bit colour space. This reduction uses a technique known as
+      random dithering, which causes the picture to look somewhat grainy
+      when it finally comes out of the printer. This dithering technique
+      has the advantage of not interfering with whatever other dithering
+      technique the printer.device may add. It actually looks and works best
+      with error dispersing dithering techniques like the Floyd & Steinberg
+      filter supported by printer.device.
+
+      Example: REDUCE=YES
+               REDUCE=NO
+
+      Default: REDUCE=YES
+
+   NOISE
+
+      The random dithering algorithm used by the colour reduction filter
+      can be tuned to incorporate additional noise. Generally, the more
+      frequent the noise is, the more colour will survive during the
+      reduction process, but this happens at the expense of "roughing up"
+      the resulting picture. With the NOISE parameter you can determine
+      the noise frequency with 0 being the minimum (= no extra noise)
+      and 16 being the maximum (= highest frequency noise):
+
+      Example: NOISE=0
+               NOISE=1
+
+      Default: NOISE=2
+
+8. How compatible is the patch?
+
+The patch was written for the original Amiga printer.device driver, not for
+smart replacements which actually know how to read bitmaps allocated by
+RTG systems, such as Picasso96. In such cases, the results produced by
+P96_PrinterPatch may be suboptimal. Also, other patches which compete for
+the same resources as P96_PrinterPatch (namely the printer.device driver)
+may interfere with P96_PrinterPatch's actions. Take care. Another point
+worth mentioning is that P96_PrinterPatch will require a lot of memory to
+perform its services. As said above, an A4 sized full colour page will
+at 600 DPI take up about 3 MBytes of memory.
+
+9. How to contact the author?
+
+The author of the P96_PrinterPatch is:
+
+   Olaf Barthel
+   Brabeckstr. 35
+   D-30559 Hannover
+   Federal Republic of Germany
+
+   e-mail: olsen@sourcery.han.de

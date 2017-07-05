@@ -1,0 +1,609 @@
+@DATABASE Picasso96
+@NODE "MAIN" "Documentazione per Picasso96"
+@remark Traduzione italiana a cura di Mario Dell'Oca (E-mail: mdoc@uli.it)
+@{b}
+
+                          Picasso96
+
+         Un sistema di gestione per schede grafiche di Amiga
+ @{ub}
+
+                 @{"          Introduzione           " link "INTRODUCTION"}
+                 @{"       Sistema richiesto         " link "REQUIREMENTS"}
+                 @{"         Compatibilità           " link "COMPAT"      }
+
+                 @{"         Installazione           " link "INST"        }
+                 @{"           Utilizzo              " link "USAGE"       }
+                 @{"         Configurazione          " link "CONFIG"      }
+
+                 @{" Documentazione per sviluppatori " link "DEVELOP"     }
+
+                 @{"             Autori              " link "AUTHORS"     }
+                 @{"         Distribuzione           " link "DISTRIB"     }
+
+         Copyright ©1994-97 Alexander Kneer & Tobias Abt
+                    Tutti i diritti riservati.
+@ENDNODE
+
+@NODE "INTRODUCTION" "Introduzione"
+@TOC "MAIN"
+@{b}Introduzione a Picasso96 @{ub}
+
+Picasso96 è un ambiente di gestione per molte schede grafiche di Amiga,
+modulare e ben integrato nel sistema. La sua intenzione principale è quella
+di fornire una soluzione quanto più possibile compatibile, trasparente e
+affidabile per il sistema ed i programmi. Per poter essere compatibile in
+tal modo, sono state modificate solo le funzioni realmente necessarie. Da
+ciò deriva un livello di compatibilità molto alto.
+
+Un'altra caratteristica del sistema Picasso96 è la capacità di usare varie
+schede grafiche allo stesso tempo, persino schede dello stesso tipo.
+
+@ENDNODE
+
+@NODE "REQUIREMENTS" "Sistema richiesto"
+@TOC "MAIN"
+@{b}
+Sistema richiesto
+@{ub}
+Obbligatori per l'uso di Picasso96:
+
+* Kickstart 3.0 (V39),
+* processore Motorola MC68020 o più avanzato,
+* almeno una delle seguenti @{"schede grafiche" link "CARDS"}:
+  CyberVision 64, Domino, Merlin, oMniBus, Picasso II, Picasso II+,
+  Picasso IV, Piccolo, Piccolo SD64 o Spectrum.
+
+Perché sono obbligatorie queste caratteristiche?
+
+* Il Kickstart 3.0 è necessario perché Picasso96 è installato nel modo più
+  compatibile possibile col sistema utilizzando caratteristiche che solo il
+  Kickstart 3.0 mette a disposizione.
+* Il processore 68000 non è utilizzabile perché non offre sufficiente
+  potenza di elaborazione per poter usare una scheda grafica (schermi più
+  ampi necessitano di un maggior numero di calcoli - il sistema sarebbe
+  incredibilmente lento). Per tale motivo, parti del codice sono state
+  scritte specificatamente per il MC68020.
+* Le schede grafiche sopra riportate sono quelle supportate a tutto il
+  Gennaio 1997. Sono in sviluppo driver per Retina BLT Z3. Altri possono
+  essere adattati a richiesta presto.
+
+Opzionali, consigliati:
+* disco rigido,
+* un po' di RAM aggiuntiva,
+* un monitor VGA (possibilmente recente).
+
+@ENDNODE
+
+@NODE "CARDS" "Schede grafiche supportate"
+@{b}
+Schede grafiche supportate
+@{ub}
+
+@{b}CyberVision: @{ub}
+La CyberVision è una scheda grafica moderna e molto attraente dotata di
+un chip S3 Trio 64 ed interfaccia bus ZorroIII. Il relativo driver è stato
+sviluppato da Michael Teske, che ha anche realizzato il supporto CyberVision
+per NetBSD.
+
+@{b}Domino: @{ub}
+La Domino è una vecchia scheda grafica, che consiste di una scheda ZorroII
+e una scheda VGA ISA sul suo retro. Usa un HiColor15-DAC.
+
+@{b}Merlin: @{ub}
+La Merlin è una scheda grafica ZorroII/III che usa un Tseng ET4000W32 e un
+TrueColor DAC. Essa offre anche alcune caratteristiche di Amiga: dispone di
+uno sprite hardware con tre colori indipendenti ed un veloce blitter con tre
+sorgenti.
+
+@{b}oMniBus: @{ub}
+Il sistema oMniBus VGA consiste di un scheda ponte tra il bus ZorroII e
+quello ISA e di una scheda grafica VGA ISA. Le schede grafiche VGA che sono
+attualmente supportate sono quelle basate su un controller VGA Tseng
+ET4000AX o Tseng  ET4000W32 e un Sierra S11483 HiColor15-DAC, un Sierra
+S15025 TrueColor-DAC o un Music MU9C4910 TrueColor-DAC. Altri DAC forse
+lavorano in modo CLUT (Color Look Up Table, orientato alla tavolozza di
+colori), ma probabilmente non sono in grado di visualizzare i modi Hi- e
+TrueColor. Il sistema oMniBus è molto vecchio e non all'avanguardia, ma
+offre una buona qualità delle immagini.
+
+@{b}Picasso II/II+: @{ub}
+La Picasso II è una scheda grafica ZorroII che usa un Cirrus GD5426 o
+GD5428. È molto diffusa. La PicassoII+ è un miglioramento della Picasso II.
+
+@{b}Piccolo: @{ub}
+Anche la Piccolo è una scheda grafica ZorroII/III che usa un Cirrus GD5426.
+Chi sviluppò questa scheda grafica (e la Spectrum) decise di scambiare le
+linee del segnale per le componenti rossa e verde del segnale RGB. Da ciò
+deriva il fatto che la Piccolo (e la Spectrum) offre un modo RGB TrueColor
+mentre il chip Cirrus normalmente offre solo un modo BGR. Forse ciò fu
+fatto perché il sistema EGS, spesso usato su queste schede grafiche, ha
+bisogno del modo RGB.
+
+@{b}Piccolo SD64: @{ub}
+La Piccolo SD64 è una scheda grafica ZorroII/III che usa un Cirrus GD5434.
+Questo è un controller a 64 bit che offre grandi prestazioni grafiche. La
+scheda è molto simile alla Piccolo e alla Spectrum. Il relativo driver è
+stato sviluppato da Niels Knoop.
+
+@{b}Spectrum: @{ub}
+La Spectrum è molto simile alla Piccolo (leggere le note sopra riportate).
+
+@{b}
+Schede grafiche attualmente non supportate
+@{ub}
+
+@{b}RetinaBLT Z3: @{ub}
+La RetinaBTL Z3 usa un processore grafico molto potente con un versatile
+blit engine. Sfortunatamente essa non possiede uno switch automatico per
+monitor, fatto che ne rende l'uso un po' scomodo.
+Un driver per questa scheda grafica è attualmente in fase di sviluppo.
+
+@{b}
+Schede grafiche non supportate
+@{ub}
+
+@{b}Retina Z2: @{ub}
+È una scheda grafica di vecchia concezione che supporta solo accessi a
+segmenti di memoria, non supportati da Picasso96 per motivi di velocità.
+È probabile che questa scheda grafica non sarà mai supportata.
+
+@ENDNODE
+
+@NODE "COMPAT" "Compatibilità"
+@TOC "MAIN"
+@{b}Quali programmi saranno usabili sotto Picasso96? @{ub}
+
+Tutti i programmi che gestiscono la loro grafica tramite chiamate standard
+di sistema e non modificano direttamente la memoria grafica saltando il
+sistema operativo.
+
+Esiste un supporto diretto per alcuni applicativi, esattamente per:
+* Art Department Professional (ASDG),
+* Photogenics (Almathera),
+* ShapeShifter (emulatore Apple Macintosh di Christian Bauer),
+* XiPaint (programma di disegno a 24bit di Thomas Dorn e Herbert Beilschmidt).
+
+Altri moduli sono attualmente in preparazione.
+
+Anche i programmi che usano la API CyberGraphics o la vilintuisup.library
+sono utilizzabili sotto Picasso96, es. CyberWindow o ShowGIF.
+
+@ENDNODE
+
+@NODE "INST" "Installazione"
+@TOC "MAIN"
+@{b}Installazione di Picasso96 @{ub}
+
+Per poter installare Picasso96 basta solo usare lo script di installazione
+fornito. I programmi saranno installati automaticamente.
+
+@{b}Attenzione! @{ub}
+
+Prima di installare Picasso96 si deve disabilitare o rimuovere i programmi
+di gestione della propria scheda grafica usati in precedenza, se presenti.
+Purtroppo non c'è modo di utilizzare contemporaneamente differenti sistemi
+di gestione delle schede grafiche.
+
+Si deve far riferimento alla documentazione del proprio sistema di gestione
+della scheda grafica per la sua inattivazione o disinstallazione.
+
+Se si usa il vecchio sistema di gestione della Picasso, si dovrà:
+
+* rimuovere il file Picasso dalla directory Devs:Monitors o WBStartup;
+* rimuovere il file village.library dalla directory Expansion o Libs.
+
+Se si usa il sistema CyberGraphX, si dovrà:
+
+* rimuovere tutti i driver CyberGraphX per schede grafiche dalla directory
+  Devs:Monitors o WBStartup.
+
+@{b}Driver Picasso96 per programmi applicativi @{ub}
+
+I driver Picasso96 per applicativi ed i rispettivi script di installazione
+sono situati nella directory Drivers sul mezzo di distribuzione, o nella
+propria directory base Picasso96, se si è scelto di installarli lì. Tali
+driver devono essere installati individualmente.
+
+@{"I file di Picasso96" link "PICASSO96FILES"}
+
+@ENDNODE
+
+@NODE "PICASSO96FILES" "I file di Picasso96"
+@{b}Il sistema Picasso96 @{ub}
+
+Per poter utilizzare Picasso96, alcuni file devono esser installati e
+configurati a seconda del proprio sistema.
+
+NOTA:
+la sottodirectory @{b}Picasso96 @{ub}è obbligatoria!
+
+I file seguenti saranno installati dallo script di installazione:
+@{b}
+   Libs:Picasso96API.library
+   Libs:Picasso96/emulation.library
+   Libs:Picasso96/rtg.library
+   Devs:Picasso96Settings
+
+   SYS:Classes/datatypes/picture.datatype
+
+   Prefs/Picasso96Mode
+   Prefs/Picasso96Mode.info
+@{ub}
+A seconda del tipo di scheda(e) presente, uno o più di questi file:
+@{b}
+   Devs:Monitors/PicassoIV          o il nome(i) della propria scheda(e)
+   Devs:Monitors/PicassoIV.info
+
+   Libs:Picasso96/CyberVision.card
+   LIBS:Picasso96/Domino.card
+   LIBS:Picasso96/Merlin.card
+   LIBS:Picasso96/oMniBus.card
+   LIBS:Picasso96/PicassoII.card
+   LIBS:Picasso96/PicassoIV.card
+   LIBS:Picasso96/Piccolo.card
+   LIBS:Picasso96/PiccoloSD64.card
+   LIBS:Picasso96/Spectrum.card
+@{ub}
+A seconda del tipo di chip grafico VGA usato:
+
+ Picasso II(+), Piccolo e Spectrum necessitano: @{b}
+   LIBS:Picasso96/CirrusGD542X.chip
+@{ub}
+ Piccolo SD64 necessita: @{b}
+   LIBS:Picasso96/CirrusGD5434.chip
+@{ub}
+ Picasso IV: @{b}
+   LIBS:Picasso96/CirrusGD5446.chip
+@{ub}
+ CyberVision 64 necessita: @{b}
+   LIBS:Picasso96/S3Trio.chip
+@{ub}
+ Domino and oMniBus: @{b}
+   LIBS:Picasso96/TsengET4000.chip
+@{ub}
+ Merlin and oMniBus: @{b}
+   LIBS:Picasso96/TsengET4000W32.chip
+@{ub}
+
+Un programma di verifica: @{b}
+   Picasso96/Debug/CheckBoards
+   Picasso96/Debug/CheckBoards.info
+@{ub}
+I file di aiuto: @{b}
+   Picasso96/Picasso96_deutsch.guide
+   Picasso96/Picasso96_deutsch.guide.info
+   Picasso96/Picasso96_english.guide
+   Picasso96/Picasso96_english.guide.info
+@{ub}
+
+Drivers per applicativi:
+
+driver per @{"ADPro" link "ADPRO"} : @{b}
+   ADPro/Savers2/Picasso96
+@{ub}
+driver per @{"Photogenics" link "PHOTOGENICS"} : @{b}
+   Drivers/Photogenics/data/GIO/Picasso96.gio
+@{ub}
+driver video per @{"ShapeShifter" LINK "SHAPESHIFTER"} : @{b}
+   Drivers/ShapeShifter/Video Drivers/Picasso96
+@{ub}
+driver per @{"XiPaint" link "XIPAINT"} : @{b}
+   Drivers/XiPaint/libs/xout_g.library
+@{ub}
+
+@ENDNODE
+
+@NODE "USAGE" "Utilizzo di Picasso96"
+@{b}Utilizzo del sistema Picasso96 @{ub}
+
+Dopo l'installazione di Picasso96 e il rilancio del sistema, basta solo
+scegliere uno dei nuovi modi video per il proprio WorkBench e gli altri
+applicativi che permettono tale scelta.
+
+Se si incontrano problemi con Picasso96, è consigliabile usare il programma
+di utilità CheckBoards per vedere se la propria scheda è stata identificata
+e configurata in maniera adeguata.
+Se tutto è a posto e non si ottiene alcun identificativo di schermo, si
+dovrebbe provare ad usare Picasso96Mode per attribuire una configurazione
+esistente alla propria scheda grafica. Basta attivare Picasso96Mode,
+scegliere una impostazione nell'elenco in alto a sinistra e selezionare la
+voce "Attach Setting to" per configurare tale impostazione per l'uso con la
+propria scheda grafica. Si termina Picasso96Mode tramite il pulsante "Save"
+e si rilancia il proprio Amiga.
+
+@ENDNODE
+
+@NODE "CONFIG" "Configurazione"
+@{b}Configurazione di Picasso96 @{ub}
+
+Ci sono due modi per configurare Picasso96:
+
+    @{" parametri dei file per monitor " link "TOOLTYPES"}
+    @{"          Picasso96Mode         " link "PICASSO96MODE"}
+
+@ENDNODE
+
+@NODE "TOOLTYPES" "Parametri"
+@{b}Parametri dei file per monitor@{ub}
+
+I file per monitor, che sono installati in Devs:Monitors ed hanno un nome
+uguale alla propria scheda grafica per una più facile identificazione,
+possiedono parametri per la loro configurazione individuale:
+
+BoardType:     obbligatorio, seleziona il tipo di scheda grafica (es.
+               PicassoIV)
+
+IgnoreMask:    opzionale, velocizza alcune funzioni blitter sulle schede
+               grafiche che usano chip VGA Cirrus. Attenzione: questo modo
+               non è completamente compatibile col sistema grafico nativo
+               di Amiga e può dare risultati indesiderati.
+               @{b}Se si vuole che Picasso96 esegua lo scorrimento sulla
+               PicassoII in modo altrettanto veloce di quanto ottenibile
+               con il vecchio programma di gestione della scheda, si deve
+               impostare questo parametro a 'Yes'! @{ub}
+               Valore predefinito: 'No'.
+
+BorderBlank:   opzionale, attiva/disattiva la bordatura nera attorno allo
+               schermo (valore predefinito: come da sistema).
+
+BigSprite:     opzionale, se impostato a 'Yes', lo sprite del puntatore
+               sarà disegnato a grandezza doppia del normale.
+
+SettingsFile:  opzionale, valore predefinito 'DEVS:Picasso96Settings'.
+
+SoftSprite:    opzionale, se impostato a 'Yes' si usa lo sprite software in
+               tutti i modi.
+
+DisplayChain:  opzionale, se impostato a 'No', il segnale originale di
+               Amiga non sarà passato quando attivo. Utile per sistemi con
+               più monitor e schede grafiche. Valore predefinito: 'Yes'.
+
+@ENDNODE
+
+@NODE "PICASSO96MODE" "Picasso96Mode"
+@{b}Picasso96Mode: il programma di configurazione per Picasso96 @{ub}
+
+Si può usare Picasso96Mode per adattare e creare modi schermo.
+Il programma è dotato di una interfaccia totalmente grafica.
+
+Nell'angolo superiore destro sono presenti quattro riquadri per operazioni
+di trascinamento che permettono di:
+* creare un nuovo oggetto (impostazioni, risoluzione o modo, in base a
+  quale elenco si usa),
+* copiare un oggetto nell'archivio appunti interno per un uso successivo,
+* duplicare un oggetto
+* cancellare un oggetto.
+
+È possibile trascinare qualsiasi voce presente in ciascuno degli elenchi
+facendo click su di essa ed uscendo dall'elenco a sinistra o a destra
+tenendo premuto il tasto sinistro del mouse.
+
+Prima di poter visualizzare un modo schermo si deve usare il menu per
+attribuire le impostazioni correnti a una specifica scheda grafica.
+
+Per attivare una risoluzione o modo bisogna fare un doppio click con il
+mouse sulla posizione dell'oggetto nell'elenco. Se si fa nuovamente un
+doppio click, la risoluzione o il modo diventano non attivi. Per il sistema
+sono visibili solo le risoluzioni e i modi attivi.
+
+Per modificare un modo, si deve fare click sul pulsante "Edit"; ciò farà
+apparire uno schermo di prova che impiega il modo corrente. Ora è possibile
+cambiare il modo di visualizzazione utilizzando i tasti freccia:
+* modificare la posizione di quanto visualizzato (usando solo i tasti
+  freccia),
+* rendere i bordi più ampi o piccoli (premendo anche un tasto MAIUSCOLE),
+* cambiare la dimensione dell'area di visualizzazione (premendo anche un
+  tasto ALT); questa operazione sarà spesso necessaria.
+
+Il pulsante "Test" fa apparire uno schermo di prova a motivi geometrici, con
+la differenza che in questo caso non si possono effettuare modifiche al modo
+schermo. Il compito primario di questa opzione è quello di permettere una
+regolazione del proprio monitor.
+
+Per concludere, si dovrebbe salvare la configurazione cambiata e rilanciare
+il proprio Amiga, per usare le nuove impostazioni.
+
+@ENDNODE
+
+@NODE "PDT" "Picture DataType"
+@{b}Picture DataType @{ub}
+
+Il picture.datatype V40 originale supporta solo schermi planari e perciò
+non è utilizzabile su schermi chunky. Il picture.datatype presente sul
+mezzo di distribuzione risolve tale problema e supporta anche le estensioni
+v43.
+
+@ENDNODE
+
+@NODE "ADPRO" "Art Department Professional"
+@{b}Driver Picasso96 per ADPro @{ub}
+
+Art Department Professional è supportato tramite un modulo di salvataggio
+controllabile tramite argomenti da linea di comando. La sintassi è:
+"TRUE/S,HI/S,R=RENDERED/S,B=BOARD/N,AUTO/S".
+
+TRUE:     permette solo modi TrueColor a 24 bit,
+HI:       permette solo modi HiColor a 15 e 16 bit,
+RENDERED: permette solo modi CLUT a 256 colori,
+BOARD:    usa solo la scheda specificata. Parametro: numero scheda,
+AUTO:     seleziona automatica del modo, senza interazione da parte
+          dell'utente.
+
+Installazione: basta copiare il driver Picasso96 nella directory "Savers2"
+               della propria directory base di ADPro.
+
+@ENDNODE
+
+@NODE "FLIP96" "FliP96"
+@{b}FliGRF visualizzatore di animazioni FLI e FLC  @{ub}
+
+FliP96 è un visualizzatore di animazioni FLI e FLC che lavora (solo) con
+il sistema Picasso96.
+
+FliP96 riconosce questi argomenti da linea di comando:
+FILE/M,DISK/S,RAM/S,ONCE/S
+
+FILE: nome(i) del(i) file di animazione da visualizzare,
+DISK: visualizzazione da disco (più lenta),
+RAM:  visualizzazione da RAM (più veloce, impostazione predefinita),
+ONCE: visualizza l'animazione solo una volta (modo ciclico predefinito).
+
+Installazione: basta copiare FliP96 dove si vuole (preferibilmente in una
+               directory accessibile dal percorso comandi dello shell).
+
+@ENDNODE
+
+@NODE "XIPAINT" "XiPaint"
+@{b}Driver per XiPaint @{ub}
+
+Il programma di disegno TrueColor XiPaint è supportato tramite una output
+library. A motivo di cambiamenti delle strutture interne di XiPaint, questa
+versione è utilizzabile solo con XiPaint 3.2 o successivo.
+
+XiPaint è disponibile da:
+ Thomas Dorn
+ Kerpengasse 69
+ 1210 Wien
+ Austria
+EMail: tdorn@xipaint.co.at
+Fido:  2:310/98.0
+
+Installazione: basta copiare la library nella directory libs della propria
+               directory base di XiPaint.
+
+@ENDNODE
+
+@NODE "SHAPESHIFTER" "ShapeShifter"
+@{b}
+ShapeShifter
+@{ub}
+
+L'emulatore di Apple Macintosh ShapeShifter è supportato tramite un driver
+video. È necessario ShapeShifter V3.1 o successivo. I modi a 256 colori
+sono possibile con tutti i tipi di schede grafiche, ma quelli 'Thousands of
+colors' e 'Millions of colors' sono possibili solo con la Picasso IV o la
+CyberVision 64. Il supporto per il modo TrueColor per la Picasso IV è ancora
+in via di sviluppo.
+
+ShapeShifter è disponibile su AmiNet (directory misc/emu) o direttamente
+da:
+ Christian Bauer
+ Max-Planck-Str.60
+ 55124 Mainz
+ Germany
+EMail: cbauer@iphcip1.physik.uni-mainz.de
+
+Installazione: basta copiare il file ShapeShifter/Picass96 nella directory
+               "Video Drivers" della propria directory di ShapeShifter.
+               Scegliere Picasso96 come driver video esterno.
+
+@ENDNODE
+
+@NODE "PHOTOGENICS" "PhotoGenics"
+@{b}driver per PhotoGenics @{ub}
+
+Per PhotoGenics (Almathera) è presente un modulo di salvataggio. È stato
+provato solo con PhotoGenics 1.2, ma dovrebbe funzionare anche con altre
+versioni.
+
+Installazione: basta copiare Picasso96.gio in PHOTOGENICS:data/GIO.
+
+@ENDNODE
+
+@NODE "EMULATION" "emulations.library"
+@{b}Supporto per altri sistemi di gestione di schede grafiche @{ub}
+
+La emulation.library acclusa è una speciale libreria che fornisce un
+supporto per altri sistemi di gestione delle schede grafiche, come le API
+(applications  programming interface) di CyberGraphX o vilintuisup.library,
+usate per creare visualizzazioni TrueColor con Intuition (vedeere ImageFX,
+Photogenics o CyberWindow).
+
+La maggior parte degli applicativi che si basano su funzioni documentate
+di libreria dovrebbero funzionare senza problemi. Quelli che invece si
+basano su una certa struttura interna e una rappresentazione dei dati
+all'interno della libreria è probabile che non funzionino (es.
+picture.datatype V43 di Ralph Schmidt).
+
+Installazione: basta copiare la emulation.library in LIBS:Picasso96
+
+@ENDNODE
+
+@NODE "DEVELOP" "Documentazione e supporto per sviluppatori"
+@TOC "MAIN"
+@{b}Si desidera supportare Picasso96 nei propri applicativi? @{ub}
+
+L'archivio per sviluppatori è presente sulla pagina base di Picasso96
+  http://picasso96.home.pages.de/
+                 alias
+  http://picasso96.cogito.de/
+
+Se non si ha accesso ad Internet, @{"gli autori" link "AUTHORS"} possono inviare l'archivio
+corrente.
+
+Se si sta sviluppando un qualsiasi driver che usa direttamente Picasso96
+è bene inviare agli autori un messaggio, così che ne siano a conoscenza.
+Se possibile, è gradito l'invio dell'applicativo completo e funzionante
+agli autori, a scopo di prova. Gli autori ringraziano anticipatamente!
+
+@ENDNODE
+
+@NODE "AUTHORS" "Autori"
+@TOC "MAIN"
+@{b}Chi ha creato Picasso96? @{ub}
+
+ @{b}Tobias Abt @{ub}
+ Bessererstrasse 9
+ 89073 Ulm
+ Germany
+ EMail:   tabt@gmx.de (prefered)
+ WWW:     http://home.pages.de/~tabt/
+ IRC:     tabt@#AmigaGer
+
+e
+
+ @{b}Alexander Kneer @{ub}
+ Masurenweg 6a
+ 89233 Neu-Ulm Pfuhl
+ Germany
+ EMail:   alexander.kneer@gmx.de
+
+
+@{b}Driver: @{ub}
+CyberVision64 e S3Trio64: Michael Teske
+PiccoloSD64 e CirrusGD5434: Niels Knoop
+
+@{b}Traduzioni: @{ub}
+italiana: Mario Dell'Oca
+
+@ENDNODE
+
+@NODE "DISTRIB" "Distribuzione"
+@TOC "MAIN"
+@{b}Come è possibile avere Picasso96? @{ub}
+
+@{b}Picasso96 @{ub}si trova sulla @{b}Picasso96 WWW home page @{ub}:
+  http://picasso96.home.pages.de/
+                 alias
+  http://picasso96.cogito.de/
+
+o su @{b}AmiNet @{ub}, es.:
+  ftp.uni-stuttgart.de:/pub/systems/amiga/aminet/gfx/board/Picasso96.lha
+
+Eventuali @{b}rapporti su errori@{ub} (bug report) per la versione AnyWare devono
+essere inviati a:
+  tabt@gmx.de (poiché Tobias Abt è il solo che legge e
+  risponde a questi messaggi, non può garantire che troverà il tempo di
+  rispondere ad ogni messaggio a lui diretto...)
+
+Se si hanno @{b}problemi @{ub}con Picasso96:
+  si deve inviare un messaggio al gruppo di discussione via E-mail (mailing
+  list) Picasso, sperando di trovare qualcuno che possa essere d'aiuto...
+  È meglio non scrivere direttamente a Tobias Abt, che legge anche la
+  mailing list, ed è oltretutto molto indaffarato...
+  Se si è interessati ad unirsi al gruppo di discussione via E-mail Picasso,
+  basta mandare un messaggio a majordomo@ninemoons.com, con "Help" come
+  unico testo.
+
+@ENDNODE

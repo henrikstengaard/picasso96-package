@@ -1,0 +1,67 @@
+;-----------------------------------------------------------------------------
+; Script to install Picasso96 Photogenics driver
+;
+; $VER: InstallPhotogenics 1.0 (15.12.96)
+;
+;-----------------------------------------------------------------------------
+
+(set #AppName "Photogenics")
+(set #SubDirName "Data/GIO")
+(set #SrcFile "Data/GIO/Picasso96.gio")
+(set #DefDir "Photogenics:")
+
+;=============================================================================
+; English strings
+;=============================================================================
+
+(if
+	(= @language "english")
+	(
+		(set #Message (cat "Please help installing the " #AppName " driver!"))
+		(set #DestDir (cat "Where is the " #AppName " main directory?"))
+		(set #DestDirHelp (cat "Please choose the directory where " #AppName " is installed."))
+		(set #Installing )
+		(set #InstallingHelp )
+	)
+)
+
+;=============================================================================
+; German strings
+;=============================================================================
+
+(if
+	(= @language "deutsch")
+	(
+		(set #Message (cat "Bitte helfen Sie bei der Installation des " #AppName " Treibers!"))
+		(set #DestDir (cat "Wo befindet sich das " #AppName " Hauptverzeichnis?"))
+		(set #DestDirHelp (cat "Bitte wählen Sie das Verzeichnis, wo "#AppName " installiert ist."))
+		(set #Installing "")
+		(set #InstallingHelp )
+	)
+)
+
+;=============================================================================
+; Install ...
+;=============================================================================
+
+(welcome #Message)
+
+(set #_destdir
+	(askdir
+		(prompt #DestDir)
+		(help	#DestDirHelp)
+		(default #DefDir)
+		(disk)
+	)
+)
+
+(set @default-dest #_destdir)
+
+(copyfiles
+	(prompt #Installing)
+	(help #InstallingHelp)
+	(source #SrcFile)
+	(dest (tackon #_destdir #SubDirName))
+	(confirm)
+	(infos)
+)

@@ -1,0 +1,12 @@
+Short:    Global Prefs editor for Picasso96
+Uploader: torchia@windsor.igs.net (Ralph Torchia)
+Author:   torchia@windsor.igs.net (Ralph Torchia)
+Type:     gfx/board
+Version:  3.2
+Requires: MUI, Picasso96 RTG
+
+Helps to manage and set all those environment
+variables and tooltypes of the Picasso96 RTG
+graphic system through the use of a simple
+GUI.
+

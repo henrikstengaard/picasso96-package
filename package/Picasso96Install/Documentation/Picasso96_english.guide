@@ -1,0 +1,737 @@
+@DATABASE Picasso96
+@NODE "MAIN" "Picasso96 Documentation"
+@{b}
+
+                          Picasso96
+
+         A software system for Amiga graphics cards
+ @{ub}
+
+                 @{"       Introduction      " link "INTRODUCTION"}
+                 @{"  Hardware requirements  " link "REQUIREMENTS"}
+                 @{"      Compatibility      " link "COMPAT"      }
+
+                 @{"      Installation       " link "INST"        }
+                 @{"          Usage          " link "USAGE"       }
+                 @{"      Configuration      " link "CONFIG"      }
+
+                 @{" Developer documentation " link "DEVELOP"     }
+
+                 @{"         Authors         " link "AUTHORS"     }
+                 @{"      Distribution       " link "DISTRIB"     }
+
+         Copyright ©1994-99 Alexander Kneer & Tobias Abt
+                    All Rights Reserved.
+@ENDNODE
+
+@NODE "INTRODUCTION" "Introduction"
+@TOC "MAIN"
+@{b}Introduction to Picasso96 @{ub}
+
+Picasso96 is  a  modular  and system friendly software environment for
+many  different  Amiga  graphics  cards.  Its  main  intentions are to
+provide  a  solution  which  is  as  system and software compatible as
+possible,  transparent  and  reliable. To be that compatible, only the
+really  necessary  functions  were  patched. This results in very high
+level  of compatibility.
+
+Another feature of the Picasso96 system is the ability  to use several
+graphics cards at the same time, even cards of the same type.
+
+@ENDNODE
+
+@NODE "REQUIREMENTS" "Hardware requirements"
+@TOC "MAIN"
+@{b}
+Hard- and software requirements
+@{ub}
+Mandatory for the use of Picasso96:
+
+* Kickstart 3.0 (V39),
+* Motorola MC68020 processor or better,
+* at least one of the following @{"cards" link "CARDS"}:
+  Altais, CyberVision 64, CyberVision 64/3D, Domino, Merlin, oMniBus,
+  Picasso II, Picasso II+, Picasso IV, Piccolo, Piccolo SD64, Pixel 64,
+  Retina BLT Z3, Spectrum 24/28 or an UAE (the Amiga emulator available
+  for different host systems like for example PCs running Linux or
+  Windows (TM)) installation with M68020 and Picasso96 support.
+
+Why are these requirements mandatory?
+  
+* Kickstart 3.0 is needed because Picasso96 is installed as system
+  friendly as possible using features only Kickstart 3.0 provides.
+* A 68000 processor is not supported because it does not offer
+  enough computing power to use a graphics card (larger displays
+  need more computation - it would get unbearable slow). Therefore,
+  parts of the code have been especially written for the MC68020.
+* The above mentioned cards are those which are supported by
+  June 1999. Others can be adapted on request soon.
+
+optional, advised:
+* a hard disk,
+* some extra RAM,
+* a (state-of-the-art) VGA monitor.
+
+@ENDNODE
+
+@NODE "CARDS" "Supported Cards"
+@{b}
+Supported Cards
+@{ub}
+
+@{b}Altais: @{ub}
+The Altais is the graphics card built into the Macrosystem Draco Amiga
+clone.  It practically is a  Retina BLT Z3  redesigned to use  the bus
+system of the Draco.
+
+@{b}CyberVision 64: @{ub}
+The  CyberVision is a quite attractive modern card featuring a S3 Trio
+64  chip  and  ZorroIII  bus  interface. The driver has initially been
+developed  by  Michael  Teske, who also did the CyberVision 64 support
+for NetBSD.
+
+@{b}CyberVision 64/3D: @{ub}
+The  CyberVision  is  a  modern  card  featuring  a  S3 ViRGE chip and
+autosensing ZorroII/III bus interface.
+
+@{b}Domino: @{ub}
+The  Domino  is  a  quite old system, too, which consists of a ZorroII
+card  and  a ISA VGA card on its back. It uses a HiColor15-DAC.
+
+@{b}Merlin: @{ub}
+The  Merlin is a ZorroII/III graphics card using a Tseng ET4000W32 and
+a  TrueColor DAC. It offers some features the Amiga has, too: it has a
+hardware  sprite with three independent colors and a fast blitter with
+three sources.
+
+@{b}oMniBus: @{ub}
+The  oMniBus  VGA system consists of a ZorroII to ISA-Bus bridge and a
+ISA-VGA card. Currently supported VGA cards are those based on a Tseng
+ET4000AX  or  Tseng  ET4000W32  VGA  controller  and  a  Sierra S11483
+HiColor15-DAC,  a  Sierra  S15025  TrueColor-DAC  or  a Music MU9C4910
+TrueColor-DAC.  Other  DACs  probably  work in CLUT (palette oriented)
+mode,  but  will probably fail to display Hi- and TrueColor modes. The
+oMniBus  is quite old and not state-of-the-art, but offers rather good
+picture quality.
+
+@{b}Picasso II/II+: @{ub}
+The  Picasso II  is  a ZorroII graphics card using a Cirrus GD5426  or
+GD5428.  It  is  quite  common.  The  PicassoII+  is a redesign of the 
+Picasso II.
+
+@{b}Piccolo: @{ub}
+The Piccolo is a ZorroII/III graphics card using a Cirrus GD5426, too.
+The developers of this card (and the Spectrum) decided to exchange the
+signal  lines for the red and green components of the RGB signal. This
+leads  to  the  fact,  that the Piccolo (and the Spectrum) offer a RGB
+true  color  mode  whereas  the Cirrus chip normally only offers a BGR
+mode.  I  guess,  this was done because the EGS system, which is often
+used with these cards, needs RGB.
+
+@{b}Piccolo SD64: @{ub}
+The Piccolo SD64 is a ZorroII/III graphics card using a Cirrus GD5434.
+This  is  a  64 bit controller offering high graphics performance. The
+card is quite similar to the  Piccolo and the Spectrum. The driver has
+been developed by Niels Knoop  who also did lots of work for the other
+Cirrus drivers.
+
+@{b}Pixel 64: @{ub}
+Like the Piccolo SD64, the Pixel 64 uses the Cirrus GD5434. This board
+has  been  designed to work with the Ateobus A1200 expansion system by
+Ateo Concepts.
+
+@{b}RetinaBLT Z3: @{ub}
+The  RetinaBTL  Z3  uses  a  very  powerful  graphics processor with a
+versatile  blit  engine.  Unfortunately  it comes without an automatic
+monitor switch which makes using it a bit inconvenient.
+A driver for this card is currently being developed.
+
+@{b}Spectrum 24/28: @{ub}
+The Spectrum is very similar to the Piccolo (read notes above). 
+
+@{b}
+Not supported Cards
+@{ub}
+
+@{b}Retina Z2: @{ub}
+This  is  a  quite  old  card which does only support segmented memory
+accesses  which  is  not  supported by Picasso96 for speed reasons. So,
+this card will probably never be supported.
+
+@{b}CyberVision PPC: @{ub}
+@{b}BVision PPC: @{ub}
+We don have such boards and not enough documentation to write a driver.
+Contact us if you do have documentation, knowledge and time to write a
+driver for thos boards. You will be welcome.
+
+@ENDNODE
+
+@NODE "COMPAT" "Compatibility"
+@TOC "MAIN"
+@{b}What kind of software will work with Picasso96? @{ub}
+
+All  programs  that  handle their graphics using standard system calls
+and do not modify the graphics memory directly bypassing the operating
+system.
+
+Direct software support for applications is available namely for:
+* 'Art Department Professional' (by ASDG),
+* Photogenics (by Almathera),
+* ShapeShifter (Apple Macintosh emulator by Christian Bauer),
+* XiPaint (24bit paint program by Thomas Dorn and Herbert Beilschmidt).
+
+Further modules are being developed.
+
+Programs  using  the CyberGraphics API or the vilintuisup.library work
+with Picasso96, too, e.g. CyberWindow or ShowGIF.
+
+@ENDNODE
+
+@NODE "INST" "Installation"
+@TOC "MAIN"
+@{b}Installation of Picasso96 @{ub}
+
+To  install  Picasso96  you  simply  have  to use the supplied install
+script. The software will then be installed automatically.
+
+@{b}Attention! @{ub}
+
+Before  installing  Picasso96  you will have to disable or remove your
+previously  used  graphics card software, if any. We regret that there
+is  no  way to use different graphic card software systems at the same
+time.
+
+Please  consult  the documentation of your software about disabling or
+uninstalling.
+
+If you use the old Picasso software, then you will have to do this:
+
+* Remove the file named Picasso from the Devs:Monitors or WBStartup
+  directory.
+* Remove the file village.library from the Expansion or Libs
+  directory.
+
+If you use CyberGraphX, do this:
+* Remove all CyberGraphX card drivers from Devs:Monitors or WBStartup.
+
+@{b}Picasso96 drivers for application programs @{ub}
+
+The Picasso96 application drivers and their individual install scripts
+can  be  found in the Drivers directory of the distribution or in your
+Picasso96  home  directory if you choose to install them there. Please
+install them individually.
+
+@{"The Picasso96 files" link "PICASSO96FILES"}
+
+@ENDNODE
+
+@NODE "PICASSO96FILES" "The Picasso96 files"
+@{b}The Picasso96 software system @{ub}
+
+To be able to use Picasso96, some files will have to be installed and
+configured for your system.
+
+NOTE:
+The subdirectory @{b}Picasso96 @{ub}is mandatory!
+
+These files will be installed by the installation script:
+@{b}
+   Libs:Picasso96API.library
+   Libs:Picasso96/emulation.library
+   Libs:Picasso96/rtg.library
+   Devs:Picasso96Settings
+
+   SYS:Classes/datatypes/picture.datatype
+
+   Prefs/Picasso96Mode
+   Prefs/Picasso96Mode.info
+@{ub}
+Depending on what kind of graphics card(s) you use one or more of
+these files:
+@{b}
+   Devs:Monitors/Picasso96     (renamed to the name of your card)
+   Devs:Monitors/Picasso96.info
+
+   Libs:Picasso96/Altais.card
+   Libs:Picasso96/CyberVision.card
+   Libs:Picasso96/CVision3D.card
+   Libs:Picasso96/Domino.card
+   Libs:Picasso96/Merlin.card
+   Libs:Picasso96/oMniBus.card
+   Libs:Picasso96/PicassoII.card
+   Libs:Picasso96/PicassoIV.card
+   Libs:Picasso96/Piccolo.card
+   Libs:Picasso96/PiccoloSD64.card
+   Libs:Picasso96/Pixel64.card
+   Libs:Picasso96/RetinaBLT.card
+   Libs:Picasso96/Spectrum.card
+@{ub}
+Depending on which kinds of VGA graphics chips are used:
+
+ Picasso II(+), Piccolo and Spectrum 24/28 need: @{b}
+   LIBS:Picasso96/CirrusGD542X.chip
+@{ub}
+ Piccolo SD64 and Pixel 64 need: @{b}
+   LIBS:Picasso96/CirrusGD5434.chip
+@{ub}
+ Picasso IV needs: @{b}
+   LIBS:Picasso96/CirrusGD5446.chip
+@{ub}
+ CyberVision 64 needs: @{b}
+   LIBS:Picasso96/S3Trio.chip
+@{ub}
+ CyberVision 64/3D needs: @{b}
+   Libs:Picasso96/S3ViRGE.chip
+@{ub}
+ Domino and oMniBus: @{b}
+   LIBS:Picasso96/TsengET4000.chip
+@{ub}
+ Merlin and oMniBus: @{b}
+   LIBS:Picasso96/TsengET4000W32.chip
+@{ub}
+ Altais and Retina BLT Z3: @{b}
+   Libs:Picasso96/NCR77C32BLT.chip
+@{ub}
+
+A test program: @{b}
+   Picasso96/Debug/CheckBoards
+   Picasso96/Debug/CheckBoards.info
+@{ub}
+These guide files: @{b}
+   Picasso96/Picasso96_deutsch.guide
+   Picasso96/Picasso96_deutsch.guide.info
+   Picasso96/Picasso96_english.guide
+   Picasso96/Picasso96_english.guide.info
+@{ub}
+
+Application drivers:
+
+The @{"ADPro" link "ADPRO"} driver: @{b}
+   ADPro/Savers2/Picasso96
+@{ub}
+@{"Photogenics" link "PHOTOGENICS"} driver: @{b}
+   Drivers/Photogenics/data/GIO/Picasso96.gio
+@{ub}
+The @{"ShapeShifter" LINK "SHAPESHIFTER"} video driver: @{b}
+   Drivers/ShapeShifter/Video Drivers/Picasso96
+@{ub}
+@{"XiPaint" link "XIPAINT"} driver: @{b}
+   Drivers/XiPaint/libs/xout_g.library
+@{ub}
+
+@ENDNODE
+
+@NODE "USAGE" "Picasso96 usage"
+@{b}Usage of the Picasso96 system @{ub}
+
+After installing Picasso96 and rebooting, simply select one of the new
+screenmodes for your WorkBench and other programs which can use them.
+
+If you experience problems with Picasso96, use the CheckBoards utility
+to see whether your board has been identified and configured properly.
+If  this  is  the  case and you do not get any DisplayID's at all, you
+should  try  using Picasso96Mode to attach an existing setting to your
+board.  Please start Picasso96Mode, select a setting in the upper left
+listview  gadget  and select the menu "Attach Setting to" to configure
+this  setting  to use your graphics card. Quit Picasso96Mode using the
+"Save" button and reboot your Amiga.
+
+@ENDNODE
+
+@NODE "CONFIG" "Configuration"
+@{b}Configuration of Picasso96 @{ub}
+
+There are three ways to configure Picasso96:
+
+    @{" The tool types of the monitor files" link "TOOLTYPES"}
+    @{"      The environment variables     " link "VARIABLES"}
+    @{"           Picasso96Mode            " link "PICASSO96MODE"}
+
+@ENDNODE
+
+@NODE "TOOLTYPES" "Tool types"
+@{b}The tool types of the monitor files@{ub}
+
+The monitor files, which will be installed in Devs:Monitors and get the
+name of their graphics card for easier identification have tool type
+values for their individual configuration:
+
+BoardType:     mandatory, selects the type of the board (e.g. PicassoIV)
+
+IgnoreMask:    optional, speeds up  certain  blitter  functions on the
+               boards using Cirrus VGA chips. But be warned: this mode
+               is not entirely compatible to the native Amiga graphics
+               system and may produce incorrect results.
+               @{b}If you want Picasso96 to scroll equally fast with the
+               PicassoII as the old software did, you will have to set
+               this tool value to 'Yes'! @{ub}
+               Defaults to 'No'.
+
+BorderBlank:   optional, switches screen border (default: like system).
+
+BigSprite:     optional, when set to 'Yes', the sprite will be rendered
+               twice as big as normal.
+
+SettingsFile:  optional, defaults to 'DEVS:Picasso96Settings'.
+
+SoftSprite:    optional, if set to 'Yes' then use software sprite in all
+               modes.
+
+DisplayChain:  optional, if set to 'No', the original Amiga signal will
+               not be switched through when active.  Useful for systems
+               with more than one monitor and graphics boards. Defaults
+               to 'Yes'.
+
+NoBlitter:     if set to 'Yes', the blitter on the graphics board will
+               not be used at all. Using this feature will hurt the
+               graphics performance considerably! Normally, there is no
+               reason to set this tool type, so use it only if you have
+               serious problems otherwise. If this helps, contact the
+               Picasso96 authors and describe your problem.
+
+NoPlanar2ChunkyBlits: currently not used. Obsolete.
+
+System2ScreenBlits: if set to 'Yes' enables the use of blitter operations
+               that require extra data fed by the CPU, for example the
+               color expansion blits used for BltTemplate() and Text().
+               Otherwise the extra CPU data is transfered to a extra buffer
+               on the board first and the blit then performed as a screen-
+               to-screen blit. On some systems system-to-screen blits can
+               cause severe problems. Therefore this switch defaults to 'No'.
+               Currently only supported with Cirrus VGA chips.
+
+GrantDirectAccess: if set to 'Yes' enables applications direct access to
+               onboard bitmaps that would normally not be available due
+               to hardware limitations (e.g. the bitmap types of the
+               current screen and the one accessed are incompatible for
+               concurrent access). Helps some really stupid direct access
+               applications like Macintosh emulators. Use only when really
+               necessary. Be warned that other appliactions might be
+               negatively affected, too.
+
+FakeNativeModes: if set to 'Yes', the default Amiga screen modes that would
+               use the Amiga chip set are replaced by a 640x480 chunky mode
+               with 31 kHz that uses this board. Makes most sense to be used
+               on a system where the native Amiga modes are otherwise not
+               available (e.g. monitor does not support 15 kHz, no flicker
+               fixer either or monitor has only one input and the graphics
+               card does not show the Amiga signal when inactive...).
+
+@ENDNODE
+
+@NODE "VARIABLES" "Environment Variables"
+@{b}Run time configuration with environment variables @{ub}
+
+Some features can be activated by environment variables. Changing one of
+the variables immediately takes effect. They can be set by calling
+@{b}SetEnv Picasso96/<variablename> <value> @{ub} from a shell window.
+You might have to create the ENV:Picasso96 directory first because this
+is not automatically created.
+
+@{b}Available variables: @{ub}
+
+AmigaVideo: if set to '31kHz', the Amiga chip set will be programmed to
+            a display timing like with the Amiga MULTISYNC monitor. This
+            enables the use of high quality audio sample rates but might
+            be harmful for a monitor attached to the Amiga video signal
+            connector that is not compatible with a line frequency of
+            31kHz.
+
+BlackSwitching: if set to 'Yes', the display will change to a black video
+            signal if a screen change cannot be performed immediately.
+            This might look a bit nicer.
+
+DirectColorMask: if set to 'Yes', blits which do not use all bitplanes
+            of the bitmap (e.g. 1 plane Amiga scroll operations which
+            are actually more effective on the planar based native chip
+            set) will be emulated by CPU instead of blitting all planes
+            at once ignoring the request to blit only a few bit planes.
+
+DoNotSetMMU: if set to 'Yes', some MMU optimisations on 040 and 060 based
+            systems are not performed. This will lead to a performance 
+            reduction to some degree but might be necessary with certain
+            system setups. Experiment with this if you keep getting
+            problems that seem to be specific for your system only.
+
+ShowModes:  with this feature you can manipulate the way certain display
+            modes are shown or hidden in the system screenmode requesters.
+            If set to 'Essential', only the really different screen modes
+            are shown, e.g. a 8bit chunky mode, one HiColor, one TrueColor
+            and one TrueAlpha (if available). To see all different screen
+            modes, set it to 'All'. To activate only a few of them you
+            can look up the Picasso96.h include file from the develop
+            archive and or all of the RGB formats you want to see
+            together (use the RGBFF_#? definitions). Now convert this mask
+            to a numerical value and set the varible to it. For example:
+            $0e=14=%1110 (hexadecimal, decimal and binary representations
+            are valid) would only allow 8bit chunky and the two TrueColor
+            flavors.
+
+PlanarOnlyDIPFDBUF: when setting this variable to 'Yes', only the native
+            planar screen modes will be marked as capable of double
+            buffering (used for animation players) in the display info
+            database. Primarily important if you create animations with
+            PPaint, because its animation player has serious bugs that
+            allow him to work only on native screen modes. The rest of
+            PPaint is not affected from this problem.
+
+DisableAmigaBlitter: if set to 'Yes', all blit operations that would
+            normally be passed to the Amiga blitter are replaced with
+            CPU routines. This can help avoiding problems in some cases
+            but is considerably slower on native Amiga screen modes.
+
+@ENDNODE
+
+@NODE "PICASSO96MODE" "Picasso96Mode"
+@{b}Picasso96Mode: the Picasso96 configuration program @{ub}
+
+Picasso96Mode is used for adjusting and creating display modes. It is 
+completely GUI driven. 
+
+In  the  upper  right  corner  you can see four drag-and/or-drop boxes
+which allow you to:
+* create a new object (can be setting, resolution or mode depending on
+  which listview you drop it into),
+* copy an object to the internal clipboard for later use,
+* duplicate an object and
+* delete an object.
+
+ You can drag any item in each of the list views by clicking on it and
+leaving  the  list  view  to  the left or right while holding the left
+mouse button pressed.
+
+ Before  you  can  display any mode you have to use the menu to attach
+the current setting to a specific card.
+
+ In  order  to  activate a resolution or mode you have to double click
+using  the  mouse  into the listview at the position of the object. If
+you  double  click once again, the resolution or mode is made inactive
+again.  Only  active resolutions and modes are visible for the rest of
+the system.
+
+ To  edit  a  mode,  you have to click on the "Edit" gadget which will
+bring up a test display using the current mode. You now can change the
+display using the cursor keys:
+* change the view position (using only the cursor keys),
+* make the border smaller or wider (when also pressing a SHIFT key) or
+* change the size of the display area (when also pressing an ALT key);
+  this will be necessary quite often.
+
+ The   gadget  "Test"  shows  a  geometrical  test  display  with  the
+difference  that you cannot change the mode. This is primarily used to
+adjust your monitor.
+
+ Finally, you should save the changed configuration and reboot, to use
+the changed settings.
+
+@ENDNODE
+
+@NODE "PDT" "Picture DataType"
+@{b}Picture DataType @{ub}
+
+The  original  V40  picture  datatype  does  only  support  planar and
+therefore  is  not usable with chunky screens. The picture.datatype in
+the distribution solves this problem and supports the v43 extensions.
+
+@ENDNODE
+
+@NODE "ADPRO" "Art Department Professional"
+@{b}Picasso96 ADPro driver @{ub}
+
+"The  Art  Department Professional" is supported via a saver which can
+be   controlled   via   command   line  arguments.  The  template  is:
+"TRUE/S,HI/S,R=RENDERED/S,B=BOARD/N,AUTO/S".
+
+TRUE:     allow only 24 bit TrueColor modes,
+HI:       allow only 15 and 16 bit HiColor modes,
+RENDERED: allow only 256 color CLUT modes,
+BOARD:    use only specific board. Parameter is board number,
+AUTO:     automatic mode selection, i.e. no user interaction.
+
+Installation: copy Picasso96 to the "Savers2" directory of your
+              ADPro home directory.
+
+@ENDNODE
+
+@NODE "FLIP96" "FliP96"
+@{b}FliGRF FLI and FLC anim player @{ub}
+
+FliP96 is a FLI and FLC anim player that (only) supports the Picasso96
+software.
+
+FliP96 supports these command line arguments:
+FILE/M,DISK/S,RAM/S,ONCE/S
+
+FILE: file name(s) of the anim(s) to play,
+DISK: play from disk (slower),
+RAM:  play from RAM (faster, default),
+ONCE: play anim only once (default: loop mode).
+
+Installation: copy FliP96 anywhere you like (preferably a directory
+              in your shell command path).
+
+@ENDNODE
+
+@NODE "XIPAINT" "XiPaint"
+@{b}XiPaint driver @{ub}
+
+The  TrueColor  paint  program  XiPaint  is  supported  by  means of a
+so-called   output   library.  Due  to  changes  in  internal  XiPaint
+structures this version only works with XiPaint 3.2 or better.
+
+XiPaint is available from:
+ Thomas Dorn
+ Kerpengasse 69
+ 1210 Wien
+ Austria
+EMail: tdorn@xipaint.co.at
+Fido:  2:310/98.0
+
+Installation: copy the library to the libs directory of your XiPaint
+              home directory.
+
+@ENDNODE
+
+@NODE "SHAPESHIFTER" "ShapeShifter"
+@{b}ShapeShifter @{ub}
+
+This driver is obsolete because ShapeShifter supports Picasso96
+directly in recent versions. The driver does not support blitter
+acceleration like the built-in driver.
+
+ShapeShifter  is  avaliable  on  AmiNet  in  the misc/emu directory or
+directly from:
+ Christian Bauer
+ Max-Planck-Str.60
+ 55124 Mainz
+ Germany
+EMail: cbauer@iphcip1.physik.uni-mainz.de
+
+Installation:
+
+If you still want to use the external driver, then copy  the  file
+ShapeShifter/Picasso96 to the "Video Drivers" directory within your
+ShapeShifter home directory. Choose Picasso96 as external video driver
+from the ShapeShifter setup window.
+
+@ENDNODE
+
+@NODE "PHOTOGENICS" "PhotoGenics"
+@{b}PhotoGenics driver @{ub}
+
+For  PhotoGenics  (from  Almathera) exists a saver module. It has been
+checked  with  PhotoGenics  1.2  only,  but  should  work  with  other
+versions, too.
+
+Installation:
+
+Simply copy Picasso96.gio to PHOTOGENICS:data/GIO.
+
+@ENDNODE
+
+@NODE "EMULATION" "emulations.library"
+@{b}Support for other graphic card software systems @{ub}
+
+The  enclosed emulation.library  is a special library providing support
+for  foreign  standards  like  the  CyberGraphX or  vilintuisup.library
+applications programming interfaces (API) which are used to create true
+color displays  with Intuition  (for example  ImageFX,  Photogenics  or
+CyberWindow).
+
+Many  programs relying  on the documented library functions only should
+work without any problems.  Those assuming a certain internal structure
+and representation of data within the library  are likely to fail (e.g.
+picture.datatype V43 from Ralph Schmidt).
+
+Installation: simply copy the emulation.library to LIBS:Picasso96
+
+@ENDNODE
+
+@NODE "DEVELOP" "Developer support"
+@TOC "MAIN"
+@{b}You want to support Picasso96 with your own software? @{ub}
+
+The developer archive can be found on the Picasso96 home page
+  http://picasso96.home.pages.de/
+                 alias
+  http://picasso96.cogito.de/
+
+If you have no Internet access, @{"I" link "AUTHORS"} could send you the
+current archive.
+
+Please send me a mail if you develop any driver which uses Picasso96
+directly so that I know about it. If possible, send me a complete and
+working set of your application for testing purposes. Thank you!
+
+@ENDNODE
+
+@NODE "AUTHORS" "Authors"
+@TOC "MAIN"
+@{b}Who created Picasso96? @{ub}
+
+ @{b}Tobias Abt @{ub}
+ Bessererstrasse 9
+ 89073 Ulm
+ Germany
+ EMail:   tabt@gmx.de (prefered)
+ WWW:     http://home.pages.de/~tabt/
+ IRC:     tabt@#AmigaGer
+
+and
+ 
+ @{b}Alexander Kneer @{ub}
+ Masurenweg 6a
+ 89233 Neu-Ulm Pfuhl
+ Germany
+ EMail:   alexander.kneer@gmx.de
+
+
+@{b}Drivers: @{ub}
+CyberVision64 and S3Trio64: Michael Teske
+PiccoloSD64 and CirrusGD5434: Niels Knoop
+
+@{b}Translations: @{ub}
+italian: Mario Dell'Oca
+finnish: Mikko Virtanen
+
+@ENDNODE
+
+@NODE "DISTRIB" "Distribution"
+@TOC "MAIN"
+@{b}How can you get Picasso96? @{ub}
+
+Picasso96  is  ShareWare. The ShareWare fee is DM 30 or US $20. Please
+send the money cash or via international money order to:
+ Kneer & Abt GbR.
+ Masurenweg 6a
+ 89233 Neu-Ulm Pfuhl
+ Germany
+
+Please  understand  that  we can't send individual acknowledge letters
+due  to the high amount of work involved, but we will you send a short
+email if you want. If you also want the latest Picasso96 and developer
+archive on disk, send additional DM 6 or US $4. Don't forget to supply
+your name and address.
+
+You can find @{b}Picasso96 @{ub}on the Internet at the @{b}Picasso96 WWW home page @{ub}:
+  http://picasso96.home.pages.de/
+                 alias
+  http://picasso96.cogito.de/
+
+or in the @{b}AmiNet @{ub}e.g.:
+  ftp.uni-stuttgart.de:/pub/systems/amiga/aminet/gfx/board/Picasso96.lha
+
+Please send @{b}bug reports @{ub}to:
+  tabt@gmx.de (due to the fact that I am the only one
+  to read and answer those emails, I can not guarantee that I will find
+  the time to reply to every mail sent to me...)
+
+If you have any @{b}trouble @{ub}with Picasso96:
+  send email to the Picasso mailing list, I hope you will find a helpful
+  soul... Please, do not write directly to me, I am reading the mailing
+  list, too, and am very busy...
+  If you are interested in joining the Picasso mailing list, send an
+  email with "Help" in the body to majordomo@ninemoons.com. If you simply
+  want to subscribe, send "subscribe Picasso" instead.
+
+@ENDNODE

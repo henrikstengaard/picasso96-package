@@ -1,0 +1,371 @@
+Short:    Picasso96 system for Amiga graphics boards
+Author:   Tobias Abt and Alexander Kneer
+Uploader: Tobias Abt <tabt@gmx.de>
+Type:     gfx/board
+Version:  2.0
+
+This archive contains all you need to get Picasso96 up and running on your
+Amiga.  Picasso96 offers support for many different Amiga graphics boards,
+has  builtin  HiColor and TrueColor support for intuition screens and many
+more...
+
+Requirements:
+- Kickstart and Workbench 3.0 (V39) or later,
+- Motorola MC68020 processor or better,
+- Altais, CyberVision64, CyberVision64/3D, Domino, Merlin, oMniBus,
+  PicassoII, PicassoII+, PicassoIV, Piccolo, Piccolo SD64, Pixel64,
+  Retina BLT Z3, Spectrum or uaegfx (for UAE, the UNIX/unusable/usable
+  Amiga Emulator).
+
+Picasso96 is ShareWare. Requested fee US$20 or DM30, free to use for
+PicassoIV and Pixel64 users (the manufacturers of those cards already
+paid for these licences) and the really few ones that already have
+sent us a donation.
+
+No distribution restrictions as long as the the archive is complete
+and none of the files within is changed. BBS notes may be added.
+
+Short history:
+
+Changes in 2.0:
+- version bump due to large improvements.
+- first Draco Altais support.
+- rtg.library:
+  - all Amiga graphics functions using the blitter now have working fallback
+    routines using the CPU instead if necessary.
+  - *NEW FEATURE*: added functionality to patch the most common native
+    Amiga chipset screen modes to use a Picasso96 board to ease use and
+    installation of Picasso96 on systems that don't have a native Amiga
+    chipset (like the Macrosystem Draco) or that have no monitor attached
+    to the native chip set signal connector or that don't have a flicker
+    fixer and no 15 kHz capable monitor. To enable this feature add the
+    tool type "FakeNativeModes=Yes" to the monitor driver of one of your
+    cards (defaults to "Yes" with the Draco Altais and "No" for all other
+    cards) and remove all native Amiga monitor drivers (!). Now, when the
+    system uses one of the native Amiga screen modes (currently only
+    LowRes, HighRes and SuperHighRes and their interlaced counter parts),
+    a 640x480 31kHz 60Hz screen mode on the graphics card will be used.
+    Note: this mode is not configurable and it is not intended to be,
+    because you should use real Picasso96 screen mode IDs whenever you
+    can. Its only intention is to get the workbench on a VGA compatible
+    screen when the current screenmode.prefs contains an invalid mode
+    id. May also be useful for some (stupid) programs that default to a
+    custom screen with a native Amiga screen mode after installation.
+  - added checks and patches to support Draco (thanks go to Jürgen
+    Döffinger for doing a big part of the work).
+  - fixed BltBitMap rendering bug when blitting from 24 bit RGB to 32 bit
+    BGRA (and also BGR to RGBA) (discovered by Niels Knoop).
+  - fixed wrong line drawing on clipped planar Amiga bitmaps (thanks
+    to Thomas Richter for finding and describing the bug).
+  - found a wrong CyberFMT assignment that could cause HiColor bitmaps
+    to get the wrong color format when used with programs using the
+    cybergraphics.library API.
+  - fixed slightly wrong MonitorSpec->ratio* values.
+  - rearranged main library files and linking to ease replacing object
+    files with own routines for programmers participating in the
+    Picasso96 rtg.library development.
+  - added support for non-disk based board drivers (for drivers that
+    will be launched automatically by UAE).
+  - board drivers can now suppress the loading of settings and the
+    creation of the edit screen mode used by Picasso96Mode. This is
+    useful for drivers that generate their own display ids like UAEgfx.
+  - fixed a possible race condition problem with the rtg.library memory
+    pool management functions.
+  - *NEW FEATURE*: software sprite routines will use on-board blitter 
+    when available. Therefore boards which have a blitter reserve about
+    12 KB of their memory for sprite and back buffers. This might affect
+    the size of the largest screen that can be opened in some systems
+    (mostly with 1MB cards).
+  - fixed rendering problem with softsprites on Hi/TrueColor screens
+    where transparent part was visible.
+  - *NEW FEATURE*: alerts (Alert(), DisplayAlert(), TimedDisplayAlert())
+    now are rendered into the front most screen if it is a Picasso96 one.
+    After termination of the alert, the display is restored.
+  - *NEW FEATURE*: board drivers can now prevent the loading and attaching
+    of settings files. Useful for the UAEgfx driver that creates its own
+    modes and cannot use standard settings definitions at all.
+  - *NEW FEATURE*: new environment variable "DisableAmigaBlitter" which
+    even forces blits on standard planar Amiga bitmaps to be performed
+    by the CPU. Set to 'yes' to enable this feature. If you don't use
+    native Amiga screens, this could improve some operations on fast
+    processors. On the other hand, Amiga screens will be slower.
+    Defaults to 'No'.
+  - *NEW FEATURE*: new environment variable "PlanesToFast" which when
+    set to 'Yes' will allocate planar bitplanes to fast memory except
+    when the caller requested a visible or standard bitmap. Defaults
+    to 'No'.
+  - Flood() patch added (our thanks go to Olaf Barthel for the code).
+  - BitMapScale() now scales between all combinations of RGB formats
+    but needs to allocate some temporary memory, if this fails, nothing
+    will be scaled... we should do a simple, braindead and slow fallback
+    routine that needs no buffer for that case.
+  - some internal optimisations, removal of unused code etc.
+  - implemented CPU version of AreaEnd() which is important for the 
+    Draco, but with 68040 and 68060 systems this one is also faster
+    than the original using the blitter (at least with ECS).
+  - fixed bug in AreaEnd() which caused crashes (e.g. IconEdit filled
+    ellipses that extended into negative rastport coordinates).
+  - fixed BltMaskBitMapRastPort() bug with standard planar Amiga bitmaps.
+  - fixed bogus softsprite savebuffer restoration in upper left corner.
+  - fixed bugs that caused CVision 3D to clear a small odd rectangle
+    sometimes.
+  - added functionality to our custom semaphore routines and found a
+    bad bug, too. Rechecked all possible scenarios.
+  - fixed BltPattern bug which sometimes caused wierd results when the
+    DisableAmigaBlitter environment variable was set.
+  - fixed a small problem with LoadView that led to incomplete wakeup
+    after a program had temporarily changed the display with LoadView(0).
+    Thanks to Pavel Narozny and Thomas Richter for pointing that out.
+  - possible enforcer hit in AllocBitMap() fixed by Thomas Richter.
+  - Draw() bug with line pattern on obscured clip rects and another
+    possible race condition issue in Draw() fixed by Thomas Richter.
+  - fixed a rare but serious bug triggered by Picasso96Mode, causing it
+    to crash.
+- PicassoIV, PicassoII, Piccolo, Piccolo SD64, Pixel64, Spectrum (all
+  Cirrus based boards):
+  - fixed mouse sprite rendering problem at top of the screen when
+    BIGSPRITE was selected (also Thomas Richter).
+  - fixed yet another sprite rendering problem that could cause illegal
+    memory accesses with autoscroll screens (again Thomas Richter).
+- PicassoIV:
+  - more and finer pixel clocks for better mode adjustment.
+- CVision3D:
+  - fixed ZorroII YUV422 PIP problem using the wrong memory aperture
+    (Pavel Narozny)
+  - extended memory clock range from 45 to 77 MHz - still defaults to
+    55 MHz
+  - implemented hardware acceleration for 2D line drawing
+- RetinaBLT Z3 and Draco Altais (NCR chip driver changes by Jürgen
+  Döffinger):
+  - small changes with masked blits (less overhead).
+  - implemented hardware support for BltPattern.
+  - hardware sprite uses color 3 as inverted color now (unlike all other
+    cards).
+- added Draco checks to monitor driver.
+- InstallScript and Installation:
+  - Added the Draco Altais.
+  - Added PVS, the Picasso96 Variable Setter by Ralph Torchia (requires MUI).
+  - Creates ENV:Picasso96 and ENVARC:Picasso96 during installation and
+    updates. Also creates all supported variables and sets them to the
+    default values. Deletes everything during uninstall, too.
+  - if the install script is activated and the system language is not
+    properly selected (no or invalid ENV:Language) or there is no
+    translation of the install script for that language, you now will
+    be asked to choose a language first.
+  - therefore only one 'Install' icon necessary.
+  - added icon for the Picasso96.readme file so that the users can
+    read about the recent changes more easily.
+  - renamed the Installer script icon to 'Setup' to better reflect that
+    the script handles installation, updates and deinstallation
+  - added nederlands and norsk translations (Pieter Roodnat and Uwe Kubosch)
+- Picasso96API:
+  - fixed bug in 1.43 that caused the width and height parameters of PIPs
+    to be ignored when opening the PIP.
+  - *NEW FEATURE* user can now allocate private bitmaps that do not need
+    to be locked. Especially useful for programs that need temporary fast
+    memory bitmaps for rendering.
+  - p96WritePixel(): fixed softsprite image trashing bug.
+  - moved some functionality to the rtg.library.
+- cybergraphics.library emulation:
+  - WriteRGBPixel(): fixed softsprite image trashing bug.
+  - fixed some CGX API function return values to be more compatible with
+    the public documentation.
+  - DoCDrawMethodTagList(): fixed bug with obscured cliprects.
+  - moved some functionality to the rtg.library.
+
+Changes in 1.43b:
+- rtg.library:
+  - fixed "DOpus crawling ants" bug (clipped lines with patterns
+    went wrong)
+- removed some potential problems in the InstallPicasso96 script
+- included current printer patch
+
+Changes in 1.43a:
+- rtg.library:
+  - fixed silly bug introduced with changes in WritePixel().
+
+Changes in 1.43:
+- rtg.library:
+  - fixed and optimized DrawEllipse() in TrueColor
+  - fixed complement Draw() in TrueColor (crawling ants bug)
+  - fixed missing WaitBlit() in WriteChunkyPixels(), WritePixelArray8()
+    and WritePixelLine8() subroutine
+  - included optimized 24 bit CPU routines for BltTemplate() and
+    BltPattern() by Niels Knoop (thanks a lot!)
+  - fixed handling of the "ENV:Picasso96/PlanarOnlyDIPFDBUF" environment
+    variable (cut'n'paste error, could therefore not work... :-)))
+  - changed WritePixel() to gain a small speedup (thanks to Didier Levet
+    for the suggestions)
+- PicassoIV:
+  - PIP can now scale down vertically to some degree by skipping lines
+  - added some synchronisation in PIP setup to prevent board from running
+    amok with PalomaTV sometimes
+- CVision3D:
+  - rearranged init function to behave better on ZorroIII systems
+  - fixed scan doubler init and switch setting
+  - BltPattern() no longer produces wrong patterns
+  - fixed a stack problem when blitting in 32bit modes
+  - doublescan modes are no fully visible
+  - leftmost column of pixels is now visible again in 8bit modes
+  - fixed memory clock setup which defaulted to ~6 MHz due to a bug
+  - doubleclocked 8bit modes were accidently disabled (wrong refresh rates)
+  - scan doubler access logic should now be correct (finally)
+  - fixed interlace problems if vertical parameters had odd values
+- RetinaBLT:
+  - fixed mode setting bug that prevented modes with vtotals greater
+    than 1024 from working at all
+  - fixed another bug with double scan modes
+
+Changes in 1.42:
+- rtg.library: fixed small bug with the "ShowModes" environment variable
+  which did not work when switching from custom flag setting to "all"
+- added new environment variable "ENV:Picasso96/PlanarOnlyDIPFDBUF"
+  which when set to "yes" removes the DIPF_IS_DBUFFER attribute form all
+  non-planar Picasso96 modes. This is intended for Personal Paint users
+  that work with animations. PPaint (at least upto version 7.2) does not
+  check the screen bitmap format properly and assumes it to be planar
+  which causes severe problems with chunky bitmaps. Using this variable
+  prevents PPaint to use chunky screen modes for double buffer animations.
+- corrected some cases within the new Hi/TrueColor CPU conversion
+  functions which caused wrong results or crashes especially when no
+  blitter was available
+- optimized CPU line drawing routines (speed increases upto 50% depending
+  on type of display and line) as well as 24bit ellipse drawing code
+- CVision3D:
+  - fixed garbled text on 8 bit screens (e.g. when typing in CON:), was
+    caused by blitter running amok when doing too small expansion blits
+  - added hardware video window (PIP), works now, but still needs some
+    little work, please test but don't complain :-))
+  - default memory clock is now 55 MHz (again)
+  - fixed scan doubler handling
+- Pixel64: included correct driver in archive
+- Documentation: changed URL to the Picasso96 home page to reflect the
+  new server location (http://picasso96.cogito.de/)
+- new P96Speed (version 1.0) included in archive
+
+Changes in 1.41a:
+- fixed integration of new Hi/TrueColor CPU conversion functions
+  causing severe errors by wrong jumps generated by linker
+- CyberVision: fixed bugs in hardware line algorithm (lines were
+  not drawn in some cases, result was different from CPU routine)
+  and added support for textured lines.
+
+Changes in 1.41:
+- Draw() support in the hardware abstraction layer and can now be
+  accelerated
+- added new Hi/TrueColor CPU conversion functions developed by Stefan
+  Sommerfeld (thanks a lot!)
+- AttachSettings: added support for CVision3D (don't know why I forgot
+  that in the first place... :-)))
+- emulation.library: found at least four wrong conversions in the
+  support.asm/GetPixel() function
+- CVision3D:
+  - implemented 24bit TrueColor modes (more economical and faster than
+    32bit and can use blitter in all cases)
+  - hardware interrupt added in ZorroIII (ZorroII not yet possible)
+  - minimum memory clock (default) now set to 55MHz
+- CyberVision: implemented hardware accelerated line algorithm (solid
+  lines only)
+- Merlin: added some NOPs to avoid color expansion problems (thanks to
+  Jan-Willem van Wieren for investigating that issue)
+- PicassoII: Code adjusted to avoid pixel errors in hicolor fonts and
+  patterns on some cards. If it still doesn't suffice, activate the
+  new tooltype "FONTSFIX=Yes" to switch from blitter to CPU rendering
+  of the afflicted operations which should solve the problem for good.
+- RetinaBLTZ3: added support for external MacroSystem video switch, is
+  now used automatically used. NOTE: if you DON'T own such a device,
+  add the tool type "DisplayChain=No" to the monitor driver icon!!!
+- Picasso96API has three new functions:
+  - p96EncodeColor
+  - p96GetBoardDataTagList
+  - p96GetRTGDataTagList
+  new Develop.lha archive is available
+- french documentation added (unfortunately not quite up to date)
+- suomi installation and documentation added (thanks to Mikko Virtanen)
+
+Changes in 1.40:
+- fixed bug in rtg.library which could cause Enforcer hits during boot
+- fixed bug in rtg.library and PicassoIV.chip which caused crashes if a
+  PicassoIV with 7.4 ROM was used without p4specials.library
+- fixed bug that caused screens sometimes to be black
+- new tags for mode id query functions for video output support
+- install script changed for ease of installation:
+  - detects PicassoII's in segmented mode and issues a warning
+  - new AttachSettings tool for basic settings file maintenance making
+    things easier for first time Picasso96 users
+  - Picasso96 is now ShareWare for users who don't own PicassoIV or
+    Pixel64 boards and the installer script gives a hint about that
+- CVision3D: driver now working in ZorroII based Amigas as well
+- new environment variable "Picasso96/ShowModes":
+  - "all": show all possible modes (including multiple modes of the same
+         depth that are only different in their RGB format)
+  - "essential": (default) the same behaviour as before, show only modes
+         that are really different from each other
+  - user supplied mask of RGB formats: decimal, hex($) or binary(%) value,
+         see includes section about color formats; example: $e=%1110=14
+         allows only 24 bit true color and chunky modes
+
+Changes in 1.39:
+- implemented CPU function for planar BltPattern() with rp->AreaPtrn (still
+  no support for bltmask and rp->AreaPtrn together)
+- fixed bug that caused enforcer hits with planar bitmaps in fast memory
+- remove some stupid mask considerations for Hi/TrueColor bitmaps (which
+  caused problems on such screens using less than 256 colors) 
+- Picasso96Mode has some extra features now:
+  - corrected algorithm to look for unused DisplayIDs when cloning settings
+  - new menue entry "Setting/Batch change IDs" which is used to renumber
+    all of the DisplayIDs for the current settings
+  - menu entry "Mode/Print mode" now prints mode lines for NetBSD 1.3, too
+
+Changes in 1.38:
+- fixed a dangerous bug in the clipping code (hi-words of some data
+  registers were trashed)
+- implemented blitter emulation routines for planar bitmaps in fast memory
+  except for: BltPattern() with rp->AreaPtrn as well as Flood() and Area#?()
+  calls with rp->TmpRas->RasPtr pointing to fast memory; QBlit functionality
+  is also missing for all bitmaps in fast memory
+- corrected BltBitMap() behavior to be same on all boards when blitting
+  from bitmaps with less planes than the destination bitmaps has
+- new monitor tooltype "GrantDirectAccess": use this if you have problems
+  with programs that use direct display memory access without using locking
+  mechanisms like ShapeShifter on ZorroII Amigas with PicassoIV or with any
+  Amiga using a CyberVision64 board; this tooltype when set to "yes" prevents
+  bitmaps with different byte swapping requirements to be on the board
+  simultaneously if they cannot be accessed at the same time without
+  reconfiguring the board; when using PIP applications on ZorroII PicassoIV
+  this tool type should be set to "no" (default) to allow all combinations
+  of screen and PIP color formats
+- fixed a small bug that was possibly causing wrong colors with CLUT screens
+- PicassoIV: PIP handling (bandwidth calculations) improved, PIP windows
+  on TrueColor screens are back, now switched off when window is occluded
+- Merlin: fixed a bug in blitter accelerated BltPattern causing enforcer
+  hits in some cases
+- Merlin: planar to chunky blits wait for blitter ready flag between planes
+- Retina BLT Z3: minimum memory clock is now 55 MHz
+- CyberVision64: sprite colors are now set correctly when the mode changes
+
+Changes in 1.37:
+- removed SwapBitsRastPortClipRect bug (aka FastLayers/PictureManager bug)
+- removed bug causing crashes with PMTNG while editing the test screen
+- cybergraphics.library emulation now v41 compatible
+- included an emulation of the cgxvideo.library using the video overlay
+  of the PicassoIV (not tested well, no CV64/3D overlay support yet, will
+  not work with Isis because of tests for emulation)
+- added new board tool type "MemoryClock" which sets the memory clock
+  (in MHz) of the board within the allowed ranges (you can check with
+  CheckBoards to see the effectively used clock value). Boards that
+  support variable memory clocks and the supported ranges (exceeding values
+  will be clipped):
+  - CyberVision64: 54-65
+  - CyberVision3D: 55-65
+  - Retina BLT Z3: 60-85
+  Note: Cirrus based boards already run at maximum speed and therefore do
+  not support this tool type, Tseng based boards do not support variable
+  memory clocks
+- PicassoII: added support for Pablo (all modes with 15 kHz and 50/60 Hz
+  switch on the video encoder) and possibly fixed a bug with wrong colors
+- Retina BLT Z3: fixed a bug causing some blitter trash on 68030 based
+  Amigas 
+- extended PIP-API:
+  - CLUT PIPs on Hi/TrueColor screens can have their own color table
+  - PIP does no longer have to use the complete window interior

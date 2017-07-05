@@ -1,0 +1,388 @@
+@database PVS.guide
+@$VER: PVS.guide 3.2
+@author "Ralph Torchia"
+@(c) "1997-1999"
+@wordwrap
+@remark *This guide file is for PVS*
+
+@remark ---------------------------------------------------------------------
+@node "Main" "PVS (Picasso96 Variable Setter)"
+@{jcenter}@{b}
+
+
+@{fg shine}P I C A S S O 9 6    V A R I A B L E    S E T T E R    ( P V S )@{fg text}
+
+by
+
+Ralph Torchia
+@{ub}
+
+@{i}A global preferences tool for the Picasso96 RTG system.@{ui}
+
+@{u}@{b}Table of Contents@{uu}@{ub}
+
+@{" INTRODUCTION          " link "intro" 0}
+
+@{" COPYRIGHT             " link "copyright" 0}
+@{" DISTRIBUTION          " link "copyright" 0}
+@{" DISCLAIMER            " link "disclaimer" 0}
+
+@{" GIFTWARE              " link "giftware" 0}
+
+@{" INSTALLATION          " link "install" 0}
+@{" USAGE                 " link "usage" 0}
+
+@{" ENVIRONMENT VARIABLES " link "variables" 0}
+@{" TOOLTYPES             " link "tooltypes" 0}
+
+@{" AUTHOR                " link "giftware" 0}
+@{" HISTORY               " link "history" 0}
+
+@{" PICASSO 96            " link "p96" 0}
+@{" MUI                   " link "mui" 0}
+
+
+Copyright 1997-99 by Ralph Torchia
+All Rights Reserved
+@{jleft}
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "intro" "Introduction"
+@{u}@{b}INTRODUCTION@{uu}@{ub}
+
+Picasso96 Variable Setter (PVS) was written so that all the numerous environment variables and tooltypes that the @{"Picasso96" link "p96" 0} RTG graphic system offers can more easily be manipulated.
+
+I always find setting environment variables to be quit irritating, requiring me to open a shell to type out some text in order to set some variables, and then having to copy the variables from ENV: to ENVARC:
+
+Tooltypes are a bit easier to handle, but with P96 able to handle multiple graphic boards, manually changing certain tooltypes on the different monitor icon files becomes old quit quickly.
+
+Due to the above reasons, I set out to create a 'better mouse trap'.  After three days of intense programming, PVS was born.
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "copyright" "Copyright & Distribution"
+@{u}@{b}COPYRIGHT AND DISTRIBUTION@{uu}@{ub}
+
+Picasso96 Variable Setter (PVS) is Copyright 1997-99 by Ralph Torchia.
+
+PVS is @{"GIFTWARE" link "giftware" 0}. It is NOT public domain. The author gives permission for PVS to be freely distributed providing that no commercial gain is made from its distribution, and no modification is made to the original distribution.
+
+Organisations or people wishing to include PVS on a coverdisk or CD-ROM should contact me first.  This excludes the AMINET CD-ROM collections.
+
+Permission is given to distribute PVS with the AnyWare version of the Picasso96 RTG system.
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "disclaimer" "Disclaimer"
+@{u}@{b}DISCLAIMER@{uu}@{ub}
+
+This software is provided "as-is" and the author accepts no responsibility for damage and/or loss of data/equipment resulting from the use of this software.
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "giftware" "This software is Giftware"
+@{u}@{b}GIFTWARE@{uu}@{ub}
+
+No features of PVS have been crippled in order to allow you to appreciate the program to the fullest. If you keep PVS for more than an evaluation period of 15 days, please send a gift (i.e. money, registration keyfile, postcard from your country, or even Email!) to the author.
+
+     Address:
+
+       Ralph Torchia
+       3069 Suffolk
+       Windsor, Ontario
+       Canada  N8R 1P1
+
+     E-mail:
+       torchia@windsor.igs.net
+
+     WWW:
+       http://www.windsor.igs.net/~torchia/
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "install" "Quick and Easy Installation"
+@{u}@{b}INSTALLATION@{uu}@{ub}
+
+Just drag the icon to wherever you want the program.
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "usage" "How to Use PVS"
+@{u}@{b}USING PVS@{uu}@{ub}
+
+Double-click on the icon, or start PVS from a shell, and a MUI interface opens. Selection of the P96 variables should be self explanatory, and there is always bubble help to aid in what each selection is for.
+
+To exit the program you may hit the close-window gadget, or one of the 3 buttons at the bottom of the window.  Closing the window or pressing the @{u}Cancel@{uu} button will exit PVS and discard any changes.  Pressing @{u}Save@{uu} will save all changes made to the environment variables and the tooltypes, while pressing @{u}Use@{uu} will only save the environment variables to ENV:
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node variables "Explaination of Environment Variables"
+@{u}@{b}EXPLAINATION OF ENVIRONMENT VARIABLES@{uu}@{ub}
+
+Please also visit the Picasso96 homepage's for more information.
+
+@{u}Keep Amiga Video@{uu}
+If set to 31kHz then the Amiga is set to a Multiscan-like mode when a Picasso96 screen is active.  This allows the use of audio rates greater then 28 kHz.
+@{i}Default: 15kHz@{ui}
+
+@{u}Direct Colormask@{uu}
+When set the rastport and blit masks will be respected during blit operations on Hi/TrueColor bitmaps.
+WARNING: Shell scrolling may get terribly slow; use only if you really need it!
+@{i}Default: No@{ui}
+
+@{u}Black Switching@{uu}
+Switches the display to black if screen switching takes more time than usual.
+@{i}Default: No@{ui}
+
+@{u}Do Not Set MMU@{uu}
+Will disable the use of the MMU.  Try this switch if your card is not working correctly.  Normally a sign of bad board design.
+@{i}Default: No@{ui}
+
+@{u}Show Modes@{uu}
+Sets how screen modes are to be presented in requesters for selection.
+@{i}Default: All@{ui}
+
+@{u}Planar Only Double Buffer (DBuf)@{uu}
+Set to remove the DIPF_IS_DBUFFER attribute from all non-planar Picasso96 modes. This is intended for Personal Paint users mostly to prevent the use of chunky screen modes for double buffer animations.
+@{i}Default: No@{ui}
+
+@{u}Disable Blitter@{uu}
+Bypasses OS rendering functions that may use the Amiga blitter.
+@{i}Default: No@{ui}
+
+@{u}Planes To Fast@{uu}
+Allows allocation of planar bitmaps into fast memory whenever possible.
+@{i}Default: No@{ui}
+
+@{u}Debug@{uu}
+Activates the debug output, if available, that is compiled into the rtg.libarary (Releases normally do not have any. This is only for developer testing).
+@{i}Default: No@{ui}
+
+@{u}Experimental@{uu}
+Activates code that is in development and not ready for the normal users.
+@{i}Default: No@{ui}
+
+@{u}Alert Support@{uu}
+Allows the display of system Alerts on Picasso96 screens.
+@{i}Default: Yes@{ui}
+
+@{u}AreaEnd Support@{uu}
+Uses custom AreaEnd() function from Picasso96 instead of the one found in graphics.library.
+@{i}Default: Yes@{ui}
+
+@endnode
+
+@node tooltypes "Explaination of Tooltypes"
+@{u}@{b}EXPLAINATION OF TOOLTYPES@{uu}@{ub}
+
+Please also visit the Picasso96 homepage's for more information at http://www.picasso96.cogito.de/
+
+@{u}Boardtype@{uu}
+Defines the name of the graphics board for the monitor file in use.
+
+@{u}Border Blank@{uu}
+Switches the screen border.  Can force the board to always or never display a border, or to mimic the normal system setting.
+@{i}Default: System@{ui}
+
+@{u}Big Sprite@{uu}
+Doubles the size of the pointer sprite (ECS sprite only).
+@{i}Default: No@{ui}
+
+@{u}Soft Sprite@{uu}
+Use software sprite emulation in all modes.  This will allow the use of more colors in a pointer.
+Normally a graphics board provides one hardware sprite, which can handle only 2 colors, with a third acting in XOR mode.
+@{i}Default: No@{ui}
+
+@{u}Ignore Mask@{uu}
+Will treat masked blits like unmasked ones for speed considerations.
+This is accomplished by speeding up certain blitter functions on boards. But be warned: this mode is not entirely compatible to the native Amiga graphics system and may produce incorrect results.
+@{i}Default: No@{ui}
+
+@{u}Display Chain@{uu}
+If not set, the original Amiga signal will not be switched through when active.  Useful for systems with more than one monitor and graphics boards.
+@{i}Default: Yes@{ui}
+
+@{u}No Planar-To-Chunky Blits@{uu}
+Will use CPU routines instead of on-board blitter for planar-to-chunky blits.  Might be faster in certain configurations.
+@{i}Default: No@{ui}
+
+@{u}No Blitter@{uu}
+If set the graphics card's on-board blitter will never be used.  Activate this only when absolutely necessay, since it will decrease overall performance.
+@{i}Default: No@{ui}
+
+@{u}System To Screen Blits@{uu}
+May improve performance, but may also lead to stability problems.  Use this with care.
+@{i}Default: No@{ui}
+
+@{u}Overclock@{uu}
+Allows the overclocking of certain graphic boards.  Use with caution since this can damage your hardware.
+@{i}Default: No@{ui}
+
+@{u}Grant Direct Access@{uu}
+When set to "yes" it prevents bitmaps with different byte swapping requirements to be on the board simultaneously if they cannot be accessed at the same time without reconfiguring the board.
+
+When using PIP applications on Zorro-II PicassoIV this tooltype should be set to "no" to allow all combinations of screen and PIP color formats.
+
+Use this if you have problems with programs that use direct display memory access without using any locking mechanisms, like ShapeShifter, on Zorro-II Amigas with PicassoIV, or with any Amiga using a CyberVision64 board.
+@{i}Default: No@{ui}
+
+@{u}Memory Clock@{uu}
+Sets the memory clock (in MHz) of the board within the allowed ranges.
+
+Only supported by the graphic cards CyberVision64, CyberVision64/3D, and RetinaBLT-Z3.
+@{i}Default: <minimun value>@{ui}
+
+@{u}Fonts Fix@{uu}
+Set rendering of screen font functions from blitter to CPU routines.  Use only if screen fonts not properly rendered.
+@{i}Default: No@{ui}
+
+@{u}Settings File@{uu}
+Defines the location of the Picasso96Settings file for the Picasso96 RTG system.
+@{i}Default: SYS:Devs/Picasso96Settings@{ui}
+
+@{u}Overclock@{uu}
+Enables a few extra pixel clocks that exceed the VGA chip specification on some boards.
+@{i}Default: No@{ui}
+
+@{u}Fake Native Modes@{uu}
+Patch the default standard Amiga screen modes to use the graphics card. (Should remove all non-Picasso96 monitor drivers from DEVS:Monitors)
+@{i}Default: No@{ui}
+
+@{u}Quiet@{uu}
+No error messages will be displayed if a mis-configured monitor driver is loaded.
+@{i}Default: No@{ui}
+
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "history" "History of PVS Evolution"
+@{u}@{b}HISTORY@{uu}@{ub}
+
+v1.0 - Initial Aminet release (12/28/97)
+
+v1.1 - Second Aminet release (01/14/97)
+     - Corrected some of the bubble-help text
+     - Adjusted MUI look a little
+     - Added menus (Project/use, save, quit, about, about mui; settings/mui)
+     - Fixed non-working keyboard-shortcut for "settings file" string gadget
+     - Created AmigaGuide file!
+
+v1.2 - Third Aminet release (01/18/98)
+     - Fixed problem of not correctly setting the SETTINGSFILE tooltype to
+       the default setting of 'DEVS:Picasso96Settings' if this tooltype was
+       not found in a monitor file.
+
+v1.3 - Fourth Aminet release (01/19/98)
+     - Fixed problem of defualt setting for DISPLAYCHAIN tooltype.  PVS was
+       setting it at 'NO', when it should have been 'YES'.  [Thanks to
+       Flemming Steffensen for tracking down the problem]
+
+v1.4 - Fifth Aminet Relase
+     - Default SETTINGFILES changed from DEVS:Picasso96Settings to
+       SYS:Devs/Picasso96Settings.
+     - Added bubble help to System2ScreenBlits and activated it for public use.
+     - Corrected misspleded "developer" in bubble help for Debug.
+     - Added bubble help to DoNotUseMMU and activated it for public use.
+     - Changed the "vanity-logo" background from MUII_ShadowFill to
+       MUII_TextBack, with text in bold.
+     - BorderBlank checkmark changed to cycle-gadget to better reflect its
+       three states.
+     - Tooltypes are not saved in all uppercase letters any longer.
+     - Added new "Edit" menu with standard preference program menu items
+       'Defaults', 'Restore' and 'Last Saved'.
+
+v1.5 - Last version broke several default tooltype settings.  Now fixed.
+
+v1.6 - Added support for the tooltype 'GrantDirectAccess' for P96 v1.38
+
+v1.7 - Added Support for new environment variable 'ShowModes' introduced
+       with P96 v1.40.
+
+v1.8 - Minor esthetic changes and bug-fix.
+
+V1.9 - 'MemoryClock' tooltype added for CVision, CVision/3D and RetinaBLT cards.
+     - 'FontsFix' tooltype added.
+
+v2.0 - Added Support for environment variable 'PlanarOnlyDIPFDBUF'.  PVS should
+       now have support for all tooltypes and environment variable of P96 v1.42.
+
+v3.0 - Complete re-write of PVS.  Code should be easier to maintain now.
+     - Support for all tooltypes and envrinoment variables added.
+     - Added recognition of new graphic boards.
+     - Warning requesters added for some options.
+     - Slight GUI re-design.
+     - PVS now will not overwrite tooltypes it does not know about in the .info
+       files.
+     - Fixed memory leaks with some options.
+     - THANKS to Tobias Abt for beta testing and the many suggestions that he
+       convinced me to make!
+
+v3.1 - Added support for environment variables AlertSupport and AreaEndSupport.
+
+v3.2 - Added support for environment variable EnableBootVGA.
+     - It appears that several users like to by-pass the excellent installer
+       script that Tobias wrote, and install the P96 package manually, and thus
+       screwing around with the names of the monitor files.  This would cause
+       problems for PVS since it was searching for specific filenames.  To
+       allow for such foolishness, PVS now scans the monitors directory for all
+       available monitors, and then determines if each monitor file is a P96
+       type.  This slow things down a bit, but it should be more fool-proof.
+     - Removed some unused code
+     - Made the list view under the tooltypes display the graphic card file name
+       and the boardtype setting for it.
+     - AmigaOS 3.5 GlowIcons added!
+
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "p96" "About Picasso96"
+
+
+Picasso96 is  a  modular  and system friendly software environment for many  different  Amiga  graphics  cards.  Its  main  intentions are to provide  a  solution  which  is  as  system and software compatible as possible,  transparent  and  reliable. To be that compatible, only the really  necessary  functions  were  patched. This results in very high level  of compatibility.
+
+Another feature of the Picasso96 system is the ability  to use several graphics cards at the same time, even cards of the same type.
+@endnode
+
+@remark ---------------------------------------------------------------------
+
+@node "mui" "About MUI"
+@next "Main"
+                          This application uses
+
+
+                        MUI - MagicUserInterface
+
+                (c) Copyright 1992-97 by Stefan Stuntz
+
+
+MUI is a system to generate and maintain graphical user interfaces. With
+the  aid  of  a  preferences program, the user of an application has the
+ability to customize the outfit according to his personal taste.
+
+MUI is distributed as shareware. To obtain a complete package containing
+lots of examples and more information about registration please look for
+a  file  called  "muiXXusr.lha"  (XX means the latest version number) on
+your local bulletin boards or on public domain disks.
+
+          If you want to register directly, feel free to send
+
+
+                         DM 30.-  or  US$ 20.-
+
+                                  to
+
+                             Stefan Stuntz
+                        Eduard-Spranger-Straße 7
+                             80935 München
+                                GERMANY
+@endnode

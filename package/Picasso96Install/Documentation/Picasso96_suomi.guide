@@ -1,0 +1,589 @@
+@DATABASE Picasso96
+@NODE "MAIN" "Picasso96 Ohjeet"
+@{b}
+
+                       Picasso96
+
+            P96 ohjelmisto Amigan näytönohjaimille
+ @{ub}
+
+                 @{"         Esittely       " link "INTRODUCTION"}
+                 @{"       Vaatimukset      " link "REQUIREMENTS"}
+                 @{"     Yhteensopivuus?    " link "COMPAT"      }
+
+                 @{"         Asennus        " link "INST"        }
+                 @{"         Käyttö         " link "USAGE"       }
+                 @{"  Ohjelmiston asetukset " link "CONFIG"      }
+
+                 @{" Tietoa ohjelmoijille   " link "DEVELOP"     }
+
+                 @{"         Tekijät        " link "AUTHORS"     }
+                 @{"         Jakelu         " link "DISTRIB"     }
+
+         Copyright ©1994-97 Alexander Kneer & Tobias Abt
+                    Kaikki oikeudet pidätetään
+@ENDNODE
+
+@NODE "INTRODUCTION" "Esittely"
+@TOC "MAIN"
+@{b}Esittely Picasso96:n @{ub}
+
+Picasso96    on   käyttäjäystävällinen   ohjelmisto   monille   Amigan
+näytönohjaimille.   Sen  tarkoituksena  on  tarjota  ratkaisu  joka on
+mahdollisimman  yhteensopiva  ja luotettava nykyisten Amiga mallien ja
+ohjelmistojen kanssa. Yhteensopivuuden varmistamiseksi ainoastaan
+tarpeelliset toiminnot on muutettu, tämä takaa mahdollisimman korkean
+yhteensopivuuden.
+
+Myös useiden näytönohjainten samanaikainen käyttö on mahdollista, joka
+kahden samanlaisen kortin.
+
+
+@ENDNODE
+
+@NODE "REQUIREMENTS" "Vaatimukset"
+@TOC "MAIN"
+@{b}
+Lisälaite ja ohjelmisto vaatimukset
+@{ub}
+Pakolliset Picasso96 vaatimukset:
+
+* Kickstart 3.0 (V39),
+* Motorola MC68020+
+* Vähintäänkin yksi seuraavista @{"korteista" link "CARDS"}:
+  CyberVision 64, Domino, Merlin, oMniBus, Picasso II, Picasso II+,
+  Picasso IV, Piccolo, Piccolo SD64 tai Spectrum.
+
+Miksi nämä vaatimukset ovat pakollisia?
+
+* Käyttöjärjestelmän versio 3.0 koska P96 on asennettu järjestelmään
+  käyttäjäystävällisesti, joihin ainoastaan KS3.0 tarjoaa
+  mahdollisuuden.
+* 68000 prosessoria ei ole tuettu koska se ei tarjoa tarpeeksi
+  laskentatehoa käyttää näytönohjaimen korkearesoluutio tiloja
+  Osa koodista on ohjemotu tukemaan suoraan 68020+ prosessoreita.
+* Yllä mainitut kortit ovat tuettuja 1997 alussa. Ajuri Retina BLT Z3
+  on kehitteillä. Muita kortteja lisätään tarvittaessa/erikseen
+  pyydettäessä.
+
+Muut "ei välttämättömät" mutta ERITTÄIN tarpeelliset:
+* kovalevy
+* fast muistia
+* kunnon monitori
+
+@ENDNODE
+
+@NODE "CARDS" "Tuetut kortit"
+@{b}
+Tuetut kortit:
+@{ub}
+
+@{b}CyberVision: @{ub}
+CyberVision on loistava nykyajan kortti jossa on S3T64 siru ja Z3
+väyläliitäntä. Ajurin on luonut Michael Teske, kuka teki CV tuen myös
+NetBSD:n
+
+@{b}Domino: @{ub}
+Domino  on  aika  vanha  Z2  kortti  jossa  on ISA VGA kortti.  Kortin
+valmistus on lopetettu.
+
+
+@{b}Merlin: @{ub}
+Merlin  on  Z2/Z3 kortti joka käyttää Tseng ET4000W32 ja TrueColor DAC
+siruja.   Se  tarjoaa joitain erikoisuuksia joita Amigassa on ollut jo
+vuosia,  kuten  spritet  kolmella  riippumattomalla  värillä ja nopean
+blitterin
+
+@{b}oMniBus: @{ub}
+oMniBus  koostuu  Z2  ja  ISA-väylästä  sekä  ISA-VGA kortista.  Tällä
+hetkellä  se  tukee  seuraavia  VGA  kortteja:   Tseng ET4000AX, Tseng
+ET4000W32 VGA controller, Sierra S11483 HiColor15-DAC, Sierra
+S15025  TrueColor-DAC  ja  Music  MU9C4910 TrueColor-DAC.  Muut kortit
+luultavasti  toimivat,  mutta  ilman  Hi-  ha  Truecolor-tiloja.  Myös
+oMniBus on vanha kortti, joka tarjoaa silti erinomaisen kuvanlaadun.
+
+@{b}Picasso II/II+: @{ub}
+Picasso  II  on  Z2  kortti  joka  käyttää Cirrus GD5426/GD5428 sirua.
+Picasso  II+  on  uudelleen suunniteltu  version  vanhasta  Picasso II
+kortista.
+
+@{b}Piccolo: @{ub}
+Piccolo  on  Z2/Z3 kortti joka myös käyttää Cirrus GD5426:sta.  Kortin
+luojat ovat vaihtaneet RGB signaalin  punaisen ja vihreän komponentit.
+Tämä  tarjoaa mahdollisuuden käyttää RGB TrueColor tiloja joita Cirrus
+sirut eivät normaalisti tarjoa.
+
+@{b}Piccolo SD64: @{ub}
+Piccolo  SD64  on  Z2/Z3 kortti joka käyttää Cirrus GD5434:ää.  Piccolo
+SD64   on   64   bittinen   kortti   joka   tarjoaa  korkeat  graafiset
+mahdollisuudet.   Se  on paljolti samanlainen kuin Piccolo ja Spectrum.
+Ajurin on ohjelmoinut Niels Knoop.
+
+@{b}Spectrum: @{ub}
+Lue yllä oleva teksti.
+
+@{b}
+Tällä hetkellä olevat kortit ilman tukea:
+@{ub}
+
+@{b}RetinaBLT Z3: @{ub}
+Retina   BLT   Z3   käyttää   todella  tehokasta  grafiikkaprosessoria
+monipuolisen   blitterin.   Valitettavasti  se  käyttää  automaattista
+monitorin valitsijaa joka tekee siitä hieman epämukavan käyttää.
+Ajuria ohjelmoidaan parasta aikaa.
+
+@{b}Retina Z2: @{ub}
+Retina  Z2  on  aika  vanha  kortti  jolle ei tule luultavasti koskaan
+tukea.
+
+@ENDNODE
+
+@NODE "COMPAT" "Yhteensopivuus"
+@TOC "MAIN"
+@{b}Minkälaiset ohjelmat toimivat Picasso96:lla? @{ub}
+
+Kaikki  ohjelmat jotka käyttävät standardeja grafiikka kutsuja eivätkä
+muuta    grafiikkamuistia   suoraan   ohittamalla   käyttöjärjestelmää.
+Käytännössä  tämä  tarkoittaa  että  suurin  osa  vanhoista peleistä ja
+demoista eivät toimi Picasson tiloissa.
+
+Suora ohjelmisto tuki on valmiina seuraaville ohjelmistoille:
+* 'Art Department Professional' (ASDG),
+* Photogenics (by Almathera),
+* ShapeShifter (Apple Macintosh emulaattori ; Christian Bauer),
+* XiPaint (24bittinen piirto-ohjelma ; T.Dorn ja Herbert Beilschmidt).
+
+Ohjelmat   jotka  käyttävät  CyberGraphXia  tai  Vilintuisup-kirjastoa
+toimivat myös Picasso96:ssa (Esim.CyberWindow, ShowGIF, Cybershow ym.)
+
+@ENDNODE
+
+@NODE "INST" "Asennus"
+@TOC "MAIN"
+@{b}Picasso96 Asennus@{ub}
+
+Asentaaksesi    Picasso96:n    sinun   pitää   yksinkertaisesti   ajaa
+asennusohjelma.  Ohjelmisto asentuu lähes automaattisesti.
+
+@{b}Huomio! @{ub}
+
+Ennen  asennusta  sinun  pitää  poistaa  käytöstä  vanhat näytönohjain
+ohjelmistot.     Valitettavasti   on   mahdotonta   käyttää   useampaa
+näytönohjain ohjelmistoa yhtäaikaa.
+
+Jos   käytät   vanhaa   Picasson  järjelmää  niin  tee  alla  kerrotut
+toimenpiteet:
+
+* Poista tiedosto Picasso DEVS:Monitors tai WBStartUp hakemistosta
+* Poista tiedosto village.library Expansion tai Libs: hakemistosta.
+
+Jos  käytät  CyberGraphX  ohjelmistoa  niin  poista  kaikki CyberGraphX
+ajurit DEVS:Monitors tai WBStartUp hakemistosta.
+
+@{b}Picasso96 ajurit muutamille ohjelmille @{ub}
+
+Picasso96 ohjelmisto ajurit ja asennusohjelmat löydät Drivers
+hakemistosta.
+
+@{"Picasso96 lisätiedostot" link "PICASSO96FILES"}
+
+@ENDNODE
+
+@NODE "PICASSO96FILES" "Picasso96 lisätiedostot"
+@{b}Picasso96 ohjelmisto @{ub}
+
+Käyttääksesi  Picasso96:sta,  joitain  tiedostoja  on  asennettava  ja
+säädettävä.
+
+HUOMIO!
+Alihakemisto @{b}Picasso96 @{ub}on pakollinen!
+
+Seuraavat tiedostot kopioituvat kovalevyllesi asennettaessa:
+@{b}
+   Libs:Picasso96API.library
+   Libs:Picasso96/emulation.library
+   Libs:Picasso96/rtg.library
+   Devs:Picasso96Settings
+
+   SYS:Classes/datatypes/picture.datatype
+
+   Prefs/Picasso96Mode
+   Prefs/Picasso96Mode.info
+@{ub}
+
+Riippuen minkälaisesta kortista/korteista sinulla on käytössä
+asentuvat seuraavat tiedostot:
+@{b}
+   Devs:Monitors/PicassoIV          Tai oman korttisi ajurin nimi
+   Devs:Monitors/PicassoIV.info
+
+   Libs:Picasso96/CyberVision.card
+   LIBS:Picasso96/Domino.card
+   LIBS:Picasso96/Merlin.card
+   LIBS:Picasso96/oMniBus.card
+   LIBS:Picasso96/PicassoII.card
+   LIBS:Picasso96/PicassoIV.card
+   LIBS:Picasso96/Piccolo.card
+   LIBS:Picasso96/PiccoloSD64.card
+   LIBS:Picasso96/Spectrum.card
+@{ub}
+Riippuen minkälaisesta VGA sirusta on kyse, seuraavat tiedostot
+asentuvat kovalevyllesi:
+
+ Picasso II(+), Piccolo and Spectrum: @{b}
+   LIBS:Picasso96/CirrusGD542X.chip
+@{ub}
+ Piccolo SD64: @{b}
+   LIBS:Picasso96/CirrusGD5434.chip
+@{ub}
+ Picasso IV: @{b}
+   LIBS:Picasso96/CirrusGD5446.chip
+@{ub}
+ CyberVision 64: @{b}
+   LIBS:Picasso96/S3Trio.chip
+@{ub}
+ Domino ja oMniBus: @{b}
+   LIBS:Picasso96/TsengET4000.chip
+@{ub}
+ Merlin and oMniBus: @{b}
+   LIBS:Picasso96/TsengET4000W32.chip
+@{ub}
+
+Testiohjelma: @{b}
+   Picasso96/Debug/CheckBoards
+   Picasso96/Debug/CheckBoards.info
+@{ub}
+Nämä ohje tiedostots: @{b}
+   Picasso96/Picasso96_deutsch.guide
+   Picasso96/Picasso96_deutsch.guide.info
+   Picasso96/Picasso96_english.guide
+   Picasso96/Picasso96_english.guide.info
+   Picasso96/Picasso96_italiano.guide
+   Picasso96/Picasso96_italiano.guide.info
+   Picasso96/Picasso96_suomi.guide
+   Picasso96/Picasso96_suomi.guide.info
+
+@{ub}
+
+Erilliset ohjelmisto ajurit:
+
+@{"ADPro" link "ADPRO"} ajuri: @{b}
+   ADPro/Savers2/Picasso96
+@{ub}
+@{"Photogenics" link "PHOTOGENICS"} ajuri: @{b}
+   Drivers/Photogenics/data/GIO/Picasso96.gio
+@{ub}
+@{"ShapeShifter" LINK "SHAPESHIFTER"} video ajuri: @{b}
+   Drivers/ShapeShifter/Video Drivers/Picasso96
+@{ub}
+@{"XiPaint" link "XIPAINT"} ajuri: @{b}
+   Drivers/XiPaint/libs/xout_g.library
+@{ub}
+
+@ENDNODE
+
+@NODE "USAGE" "Picasso96:n käyttö"
+@{b}Picasso96:n käyttö @{ub}
+
+Asennuksen  ja  uudelleenkäynnistyksen  jälkeen  valitse Workbenchille
+uusi  grafiikkatila(SYS:prefs/screenmode).   Tämän  jälkeen voit alkaa
+asettamaan muita käyttämiäsi ohjelmia Picasson näyttötiloihin.
+
+Jos sinulla on ongelmia Picasso96:n käytössä, kokeile ajaa CheckBoards
+ohjelma  nähdäksesi onko korttisi tunnistettu ja säädetty oikein.  Jos
+kaikki  näyttää  olevan  kunnossa  mutta  et saa DisplayID:tä näkyviin
+(GetmodeID-ohjelmalla   näet  onko  Picasso  tilat  käytössä)  kokeile
+käyttää   ohjelmaa  Picasso96Mode:   valitse  joku  asetus  vasemmalla
+olevasta  listaikkunasta  ja  valitse  valikoista  'Attach Setting to'
+säätääksesi korttisi käyttämään kyseisiä tiloja.  Lopeta Picasso96Mode
+ja uudelleen käynnistä koneesi.
+
+@ENDNODE
+
+@NODE "CONFIG" "Säätäminen"
+@{b}Picasso96:n säätäminen @{ub}
+
+On kaksi tapaa säätää Picasso96:
+
+    @{"      Monitoriajurin Tooltypet      " link "TOOLTYPES"}
+    @{"           Picasso96Mode            " link "PICASSO96MODE"}
+
+@ENDNODE
+
+@NODE "TOOLTYPES" "Tooltypet"
+@{b}Monitoriajurisi tooltypet@{ub}
+
+Monitoritiedostot  jotka on asennettu DEVS:Monitors hakemistoon saavat
+erilaisia   Tooltype   arvoja   tunnistukseen   ja  yksityiskohtaiseen
+säätämiseen:
+
+BoardType:     Pakollinen. Korttisi nimi (esim. PicassoIV)
+
+IgnoreMask:    Vapaavalintainen, nopeuttaa joitain blitteritoimintoja
+               käyttäen Cirrus VGA sirua. Ole varauksellinen, tämä
+               toiminto ei ole 100% yhteensopiva Amigan alkuperäis-
+               tilojen kanssa, ja saattaa aiheuttaa painvastaisia
+               tuloksia.
+               @{b}Jos haluat Picasso96:n rullaavan ruutua yhtä
+               nopeasti kuin PicassoII teki vanhalla ohjelmistolla,
+               sinun pitää asettaa tämän tooltype asentoon 'Yes'.@{ub}
+               Alkuperäisasetus on 'No' (=ei)
+
+BorderBlank:   Vapaavalintainen, tummentaa ruutujen reunat.
+
+BigSprite:     Vapaavalintainen. Asetettuna 'Yes' asentoon Spritet
+               piirretään tuplasti isompana kuin normaalisti.
+
+SettingsFile:  Vapaavalintainen, alkuperäisasetus on
+               'DEVS:Picasso96Settings'.
+
+SoftSprite:    Vapaavalintainen, kun asetettu 'Yes' tilaan niin
+               korttiin valmiiksi ohjelmoituja spritejä käytetään
+               kaikissa tiloissa.
+
+DisplayChain:  Vapaavalintainen, jos asetetaan 'No' asentoon
+               alkuperäistä Amigan signaalia ei päästetä läpi.
+               Hyödyllinen jos sinulla on enemmän kuin yksi monitori ja
+               näytönohjain. Alkuperäis asetus on 'Yes'
+
+@ENDNODE
+
+@NODE "PICASSO96MODE" "Picasso96Mode"
+@{b}Picasso96Mode: Picasso96 säätöohjelma @{ub}
+
+Picasso96Modea käytetään näyttötilojen säätämiseen ja luomiseen.  Sillä
+on graafinen käyttöliittymä joten näppäimistöä tarvitaan harvoin.
+
+Oikeassa  yläreunassa  näet  drag-and/or-drop  painikkeita  joita  voit
+käyttää:
+
+* Luo uusi (käytetään asetuksiin, resoluution tai näyttötilaan riippuen
+  mihin listaikkunaan sen pudotat.
+* Kopioi kohde muistiin myöhempää käyttöä varten.
+* Tee kopio valitusta toiminnosta
+* Poista valittu toiminto
+
+Voit  raahata  minkä tahansa toiminnon (resoluution, näyttötilan yms.)
+valitsemalla  sen,  pitämällä  hiiren vasenta painiketta painettuna ja
+vetämällä  toiminnon  pois listaikkunasta joko vasemmalta tai oikealta
+puolelta.
+
+Ennen  kuin  voit  käyttää  mitään  näyttötiloja  sinun pitää antaa ne
+kortin  käyttöön.   Tämä  tapahtuu  valikosta  'Attach  setting to' ja
+valitsemalla muutettava näytönohjain.
+
+Voidaksesi   aktivoida   resoluution   tai   näyttötilan  sinun  pitää
+tuplaklikata   listaikkunassa   kyseisen   toiminnon   kohdalla.   Jos
+tuplaklikkaat sitä uudestaan, resoluutio tai näyttötila asetetaan pois
+käytöstä(tämä EI SIIS poista toimintoa.) Näin ollen näyttötilat eivät
+ole käytettävissä ennenkuin ne taas otetaan uudelleen käyttöön.
+
+Muuttaaksesi  näyttötilaa  sinun pitää painaa EDIT-painiketta joka tuo
+esiin  testitilan  kyseisestä  näyttötilasta.  Nyt voit muutella tilaa
+nuolinäppäimillä.:
+* Määrittele ruudun sijainti
+* Pienennä tai suurenna reunoja (pitämällä samanaikaisesti pohjassa
+  SHIFT näppäintä)
+* Muuta tilan koko (pitämällä samanaikaisesti pohjassa ALT näppäintä)
+  Tämä on aika usein tarpeellista.
+
+TEST-painike näyttää ainoastaan testikuvan jota ei voi muutella.  Tämä
+on ensisijaisesti tarkoitettu säätämään tilat monitorillesi sopiviksi.
+
+Lopuksi sinun pitää tallentaa muutokset ja uudelleenkäynnistää koneesi
+käyttääksei uusia muutoksia.
+
+@ENDNODE
+
+@NODE "PDT" "Picture DataType"
+@{b}Picture DataType @{ub}
+
+Alkuperäinen V40 picture.datatype tukee ainoastaan PLANAR tiloja jotka
+eivät ole käytettävissä CHUNKY tiloissa. Picasso96:n picture.datatype
+korjaa tämän ongelman.
+
+@ENDNODE
+
+@NODE "ADPRO" "Art Department Professional"
+@{b}Picasso96 ADPro ajuri @{ub}
+
+"Art  Department Professional"-ohjelmaa tuetaan tallennusajurin
+muodossa. Sitä ohjataan seuraavilla parametreillä:
+"TRUE/S,HI/S,R=RENDERED/S,B=BOARD/N,AUTO/S".
+
+TRUE:     Ainoastaan 24 bittiset tilat käytössä.
+HI:       Ainoastaan 15 and 16 bittiset tilat käytössä.
+RENDERED: Ainoastaan 256 väriset  CLUT-tilat käytössä.
+BOARD:    Käytä tiettyä näytönohjainta. Parametsi on kortin numero.
+AUTO:     Automaattinen tilanvalinta.
+
+Asennus: kopio Picasso96 "Savers2"-hakemistoo ADProon omaan
+hakemistoon.
+
+@ENDNODE
+
+@NODE "FLIP96" "FliP96"
+@{b}FliGRF FLI and FLC animaation näyttäjä @{ub}
+
+FliP96 on FLI ja FLC näyttäjä joak tukee ainoastaan Picasso96
+ohjelmistoa.
+
+Sitä ohjataan seuraavilla parametreillä:
+FILE/M,DISK/S,RAM/S,ONCE/S
+
+FILE: näytettävä(t) tiedosto(t).
+DISK: Näytä suoraan kovalevyltä (hitaampi)
+RAM:  Näytä suoraan muistista (nopeampi)
+ONCE: Näytä animaatio vain kerran. Alkuperäisasetuksessa animaatiota
+      pyöritetään niin kauan kunnes käyttäjä lopettaa sen.
+
+Asennus: kopioi FliP96 mihin tahansa hakemistoon. C: tai Picasso96:
+hakemistot ovat parhaita vaihtoehtoja.
+
+@ENDNODE
+
+@NODE "XIPAINT" "XiPaint"
+@{b}XiPaint ajuri @{ub}
+
+XiPaint  on  TrueColor  piirto-ohjelma  joka on tuettu niin kutsutulla
+ulostulo  kirjastolla'.   Tämä ajuri toimii ainoastaan XiPaint 3.2 tai
+uudemman version kanssa.
+
+XiPaint is saatavana:
+ Thomas Dorn
+ Kerpengasse 69
+ 1210 Wien
+ Austria
+EMail: tdorn@xipaint.co.at
+Fido:  2:310/98.0
+
+Asennus: Kopioi kirjasto XiPaintin libs-hakemistoon.
+
+@ENDNODE
+
+@NODE "SHAPESHIFTER" "ShapeShifter"
+@{b}
+ShapeShifter
+@{ub}
+
+Shapeshifter,  Apple  Macintosh  emulaattoria on tuettu videoajurilla.
+Vaatimuksena  on  Shapeshifterin  3.1 tai uudempi versio.  256 väriset
+tilat  toimivat kaikilla näytänohjaimilla mutta 'thousands of colours'
+ja   'million   of   colours'   toimivat   ainoastaan  PicassoIV:n  ha
+CyberVisionin kanssa. Truecolor tuki PicassoIV:lle on paraikaa
+tekeillä.
+
+Shapeshifteri on saatavilla Aminetistä misc/emu, tai suoraan
+tekijältä:
+
+ Christian Bauer
+ Max-Planck-Str.60
+ 55124 Mainz
+ Germany
+EMail: cbauer@iphcip1.physik.uni-mainz.de
+
+Asennus:
+Kopioi Shapeshifter/Picasso96 Shapeshifterin "Video Driver"
+hakemistoon. Valitse Picasso96  "External video ajuriksi"
+
+@ENDNODE
+
+@NODE "PHOTOGENICS" "PhotoGenics"
+@{b}PhotoGenics ajuri @{ub}
+
+Photogenicsille   on   tehty   tallennusmoduuli.    Sitä  on  käytetty
+ainoastaan  version  1.2  kanssa,  nutta sen pitäisi toimi myös muiden
+versioiden kanssa.
+
+Asennus:
+Kopioi Picasso96.gio Photogenics:data/GIO hakemistoon.
+
+@ENDNODE
+
+@NODE "EMULATION" "emulations.library"
+@{b}Tuki muille näytönohjain ohjelmistoille @{ub}
+
+Mukana tuleva emulation.library tarjoaa mahdollisuuden käyttää muita
+näytönohjain standardeja, kuten CyberGraphXa tai vilintuisup.libraryä.
+
+Monet ohjelmat jotka käyttävät kirjasto kutsuja omien rutiiniensa
+sijaan toimivat ilman ongelmia.
+
+Asennus:
+Kopioi emulation.library LIBS:Picasso96 hakemistoon.
+
+@ENDNODE
+
+@NODE "DEVELOP" "Ohjelmoijan tuki"
+@TOC "MAIN"
+@{b}Haluatko tukea Picasso96:sta omilla ohjelmillasi? @{ub}
+
+Ohjelmoijan paketin saat Picasso96:n kotisivulta
+  http://picasso96.home.pages.de/
+              alias
+  http://picasso96.cogito.de/
+
+Jos sinulla ei ole internet mahdollisuutta, @{"voin" link "AUTHORS"} lähettää
+sinulle kyseisen paketin.
+
+Ole  hyvä  ja  lähetä minulla tietoa jos olet ohjelmoimassa ajuria tai
+ohjelmaa  joka  käyttää Picasso96:sta.  Jos mahdollista lähetä minulle
+työsi  jotta  voin  kokeilla  sitä (ehkä löytää bugeja joko sinun, tai
+Picasso96:n softasta).
+
+@ENDNODE
+
+@NODE "AUTHORS" "Tekikä"
+@TOC "MAIN"
+@{b}Ketkä loivat Picasso96:n? @{ub}
+
+ @{b}Tobias Abt @{ub}
+ Bessererstrasse 9
+ 89073 Ulm
+ Germany
+ EMail:   tabt@gmx.de (prefered)
+ WWW:     http://home.pages.de/~tabt/
+ IRC:     tabt@#AmigaGer
+
+tai
+
+ @{b}Alexander Kneer @{ub}
+ Masurenweg 6a
+ 89233 Neu-Ulm Pfuhl
+ Germany
+ EMail:   alexander.kneer@gmx.de
+
+
+@{b}Ajurit: @{ub}
+CyberVision64 ja S3Trio64: Michael Teske
+PiccoloSD64 ja CirrusGD5434: Niels Knoop
+
+@{b}Käännökset: @{ub}
+italia: Mario Dell'Oca
+suomi: Mikko Virtanen
+
+@ENDNODE
+
+@NODE "DISTRIB" "Jakelu"
+@TOC "MAIN"
+@{b}Mistää saat P96 päivitykset? @{ub}
+
+
+@{b}Picasso96 @{ub} löytyy @{b}Picasso96:n kotisivulta @{ub}:
+  http://picasso96.home.pages.de/
+              alias
+  http://picasso96.cogito.de/
+
+tai @{b}AmiNetistä @{ub}esim.:
+  ftp.uni-stuttgart.de:/pub/systems/amiga/aminet/gfx/board/Picasso96.lha
+
+Ole hyvä ja lähetä @{b}bugi-ilmoituksia@{ub} ilmaisversiosta:
+  tabt@gmx.de
+
+Jos sinulla on @{b}ongelmia@{ub} Picasso 96:n käytössä:
+Lähetä sähköpostia Picasson postituslistalle. Sieltä löydät jonkun
+joka voi auttaa sinua. Älä kirjoita suoraan minulle koska myös minä
+olen postitus listalla. Jos haluat liittyä Picasson postituslistalle
+lähetä sähköpostia osoitteeseen: majordomo@ninemoons.com. (body=HELP)
+
+@ENDNODE

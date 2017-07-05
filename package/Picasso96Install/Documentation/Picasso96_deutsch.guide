@@ -1,0 +1,642 @@
+@DATABASE Picasso96
+@NODE "MAIN" "Picasso96 Dokumentation"
+@{b}
+
+                            Picasso96
+
+            Das Softwaresystem für Amiga-Grafikkarten.
+@{ub}
+
+                  @{"        Einführung        " link "INTRODUCTION"}
+                  @{" Hardwarevoraussetzungen  " link "REQUIREMENTS"}
+                  @{"      Kompatibilität      " link "COMPAT"      }
+
+                  @{"       Installation       " link "INST"        }
+                  @{"         Benutzung        " link "USAGE"       }
+                  @{"       Konfiguration      " link "CONFIG"      }
+
+                  @{" Entwicklerdokumentation  " link "DEVELOP"     }
+
+                  @{"          Autoren         " link "AUTHORS"     }
+                  @{"       Bezugsquelle       " link "DISTRIB"     }
+
+
+
+        Copyright ©1994-96 Alexander Kneer & Tobias Abt
+                   Alle Rechte vorbehalten.
+
+@ENDNODE
+
+@NODE "INTRODUCTION" "Einführung"
+@TOC "MAIN"
+@{b}Einführung in Picasso96 @{ub}
+
+Picasso96 ist eine modulare und systemfreundliche Softwareumgebung für
+verschiedene Amiga-Grafikkarten. Die wichtigsten Ziele,  die  bei  der
+Programierung verfolgt wurden, sind  Kompatibilität,  Transparenz  und
+Zuverlässigkeit. Um möglichst kompatibel zu bleiben,  werden  nur  die
+notwendigsten Funktionen des AmigaOS verändert.
+
+Eine weitere Besonderheit von Picasso96  ist  die  Fähigkeit,  mehrere
+Grafikkarten  gleichen  oder  unterschiedlichen Typs  gleichzeitig  zu
+betreiben.
+
+@ENDNODE
+
+@NODE "REQUIREMENTS" "Hardwarevoraussetzungen"
+@TOC "MAIN"
+@{b}
+Hard- und Softwarevoraussetzungen
+@{ub}
+Absolut notwendig zum Betrieb der Picasso96-Software ist folgendes:
+
+* Kickstart 3.0 (V39),
+* 68020 Prozessor oder besser,
+* eine (oder mehrere) der folgenden @{"Grafikkarten" link "CARDS"}:
+  CyberVision 64, CyberVision 64/3D, Domino, Merlin, oMniBus, PicassoII,
+  PicassoII+, PicassoIV, Piccolo, Piccolo SD64, Pixel 64, Retina BLT Z3,
+  Spectrum 24/28 oder eine UAE (Amiga Emulator) Installation mit M68020
+  und Picasso96 Unterstützung.
+
+Wieso sind obige Voraussetzungen unbedingt notwendig?
+
+* Kickstart 3.0 wird benötigt, weil sich Picasso96 so systemfreundlich
+  wie nur irgend möglich ins System integriert, was aber die Fähig-
+  keiten von Kickstart 3.0 zwingend erforderlich macht.
+* Ein 68000 Prozessor wird nicht unterstützt, weil es mit so geringer
+  Rechenleistung keinen Sinn macht, eine Grafikkarte zu betreiben, und
+  die Software deshalb auch teilweise speziell für die Prozessortypen
+  Motorola MC68020-68060 optimiert wurde.
+* Bei den aufgeführten Grafikkarten handelt es sich um die, für die
+  Mitte Juni 1998 funktionsfähige Treiber vorliegen. Falls Bedarf
+  besteht, können von uns weitere Karten in kürzester Zeit unterstützt
+  werden.
+
+Darüberhinaus sehr empfehlenswert:
+* Festplatte,
+* großzügig dimensionierter Arbeitsspeicher,
+* leistungsfähiger Monitor.
+
+@ENDNODE
+
+@NODE "CARDS" "Unterstützte Grafikkarten"
+@{b}
+Unterstützte Grafikkarten
+@{ub}
+
+@{b}CyberVision 64: @{ub}
+Die  CyberVision  64 ist eine ziemlich moderne Karte mit einem S3 Trio
+64  und ZorroIII Bus Interface. Dieser Treiber wurde von Michael Teske
+erstellt,  der  auch den NetBSD-Treiber für die CyberVision entwickelt
+hat.
+
+@{b}CyberVision 64/3D: @{ub}
+Die  CyberVision  64/3D  ist eine moderne Karte mit einem S3 ViRGE und
+autosensing ZorroII/III Bus Interface.
+
+@{b}Domino: @{ub}
+Die  Domino ist eine alte Grafikkarte, die aus einer ZorroII-Karte und
+einer  ISA  VGA  Grafikkarte  besteht,  wobei  die VGA-Karte huckepack
+montiert ist.
+
+@{b}Merlin: @{ub}
+Die Merlin ist eine ZorroII/III Grafikkarte, die einen Tseng ET4000W32
+Grafikkontroller  und  einen  24bit  Echtfarben-DAC besitzt. Besonders
+schön an der Merlin sind ihr dreifarbiges Hardwaresprite und ein recht
+schneller Blitter mit drei Quellen.
+
+@{b}oMniBus: @{ub}
+Das  oMniBus VGA System besteht aus einer ZorroII-ISA-Brückenkarte und
+einer ISA-VGA Grafikkarte. Unterstützt werden momentan VGA Karten, die
+einen  Tseng  ET4000AX oder einen Tseng ET4000W32 VGA Grafikkontroller
+und   einen   Sierra   S11483   HiColor15-DAC,   einen  Sierra  S15025
+TrueColor-DAC oder einen Music MU9C4910 TrueColor-DAC besitzen. Andere
+DACs  würden zwar CLUT-Modi (Palettenmodi; bis 256 Farben) darstellen,
+aber  wohl keine Echtfarbenmodi. Die oMniBus ist zwar ziemlich alt und
+nicht   mehr   Stand   der   Technik,  bietet  aber  eine  recht  gute
+Bildqualität.
+
+@{b}PicassoII/II+: @{ub}
+Die  PicassoII  von  Village  Tronic  ist eine weitverbreitete ZorroII
+Grafikkarte  mit  dem  Cirrus GD5426 oder GD5428 Grafikkontroller. Die
+PicassoII+ ist ein Redesign der PicassoII.
+
+@{b}PicassoIV: @{ub}
+Die  PicassoIV von Village Tronic ist eine ZorroII/III Grafikkarte mit
+dem  modernen und schnellen PCI-Chip Cirrus GD5446. Die PicassoIV bie-
+tet standardmäßig einen eingebauten FlickerFixer.
+
+@{b}Piccolo: @{ub}
+Die  Piccolo  ist  eine ZorroII/III Grafikkarte und verwendet auch den
+Cirrus  GD5426. Besonderheit: die Entwickler der Piccolo (und auch der
+Spectrum)  haben  die  Anschlüsse  der Rot- und der Blaukomponente des
+RGB-Signals vertauscht, damit die Karten einen RGB-Modus unterstützen,
+weil der Cirrus normalerweise nur den BGR-Echtfarbenmodus unterstützt.
+
+@{b}Piccolo SD64: @{ub}
+Die  Piccolo  SD64  benutzt  den Cirrus GD5434, einen schnellen 64 bit
+Grafikprozessor.  Die  Karte  ist  ähnlich  wie  die  Piccolo  und die
+Spectrum aufgebaut. Der Treiber wurde von Niels Knoop entwickelt.
+
+@{b}Pixel 64: @{ub}
+Die  Pixel  64 ist wie die Piccolo SD64 eine Grafikkarte auf Basis des
+Cirrus  GD5434.  Sie  ist für das Ateobus A1200 Erweiterungssystem von
+Ateo Concepts gedacht.
+
+@{b}RetinaBLT Z3: @{ub}
+Die  RetinaBLT Z3 hat einen leistungsfähigen Grafikprozessor mit einem
+sehr  leistungsfähigen Blitter. Andererseits gehört standardmäßig kein
+automatischer   Monitorumschalter   wie   bei   anderen   Karten   zum
+Lieferumfang, was die Bedienung etwas erschwert.
+
+@{b}Spectrum 24/28: @{ub}
+Die GVP Spectrum verhält sich im grossen und ganzen wie die Piccolo.
+
+@{b}
+Nicht unterstützte Grafikkarten
+@{ub}
+
+@{b}Retina Z2: @{ub}
+Die  Retina  Z2  ist  eine  sehr  alte  Karte,  die ihren Speicher nur
+segmentiert  einbindet,  was  mit  dem  linearen  Speicherkonzept  von
+Picasso96 kollidiert.  Deshalb  wird sie evtl. nie unterstützt werden,
+weil  das  dazu führen würde, daß die anderen Karten durch den höheren
+Verwaltungsaufwand deutlich langsamer würden.
+
+@ENDNODE
+
+@NODE "COMPAT" "Kompatibilität"
+@TOC "MAIN"
+@{b}
+Welche Software arbeitet mit Picasso96 zusammen?
+@{ub}
+Prinzipiell jede Software, die systemkonform arbeitet und nicht direkt
+unter  Umgehung  des  Betriebssystems  direkt  auf  den Grafikspeicher
+zugreift.
+
+Direkte Unterstützung in Form eines Treibermoduls existiert für:
+
+* "Art Department Professional" (Bildbearbeitungsprogramm von ASDG),
+* Photogenics (Mal- und Bildbearbeitungsprogramm von Almathera),
+* ShapeShifter (Apple Macintosh Emulator von Christian Bauer),
+* XiPaint (24bit Malprogramm von Thomas Dorn und Herbert Beilschmidt).
+
+Weitere Module befinden sich in Entwicklung.
+
+Desweiteren  funktionieren  mit  Picasso96  fast  alle  Programme, die
+CyberGraphX, zum Beispiel CyberWindow (erhältlich im AmiNet), oder die
+vilintuisup.library  der  alten PicassoII-Software, zum Beispiel deren
+Bilderanzeiger ShowGIF, unterstützen.
+
+@ENDNODE
+
+@NODE "INST" "Die Installation"
+@TOC "MAIN"
+@{b}Die Installation @{ub}
+
+Zur    Installation   von   Picasso96   benutzen   Sie   einfach   das
+Installationsskript   auf   der  Diskette.  Damit  wird  die  Software
+automatisch installiert.
+
+@{b}Achtung! @{ub}
+
+Bevor  Sie  Picasso96  installieren müssen Sie Ihre alte Grafikkarten-
+Software  ausschalten  oder  deinstallieren.  Es  ist technisch leider
+nicht  möglich, verschiedene Grafikkarten-Softwaresysteme gleichzeitig
+zu benutzen.
+
+Bitte lesen Sie in der Dokumentation Ihrer alten Grafikkarten-Software
+nach, wie dies genau geht.
+
+Wenn Sie die alte Picasso-Software benutzen, dann gehen Sie so vor:
+
+* Entfernen Sie die Datei Picasso aus dem Verzeichnis Devs:Monitors
+  bzw. aus der Schublade WBStartup.
+* Entfernen Sie Datei village.library aus dem Verzeichnis Expansion
+  Ihres Startvolumes bzw. aus dem Verzeichnis libs:.
+
+Wenn Sie CyberGraphX benutzen, dann gehen Sie so vor:
+
+* Entfernen Sie aus dem Verzeichnis Devs:Monitors
+  bzw. aus der Schublade WBStartup alle CyberGraphX-Kartentreiber.
+* Bitte entfernen Sie aus dem Verzeichnis libs: cybergraphics.library,
+  cyberlayers.library und cyberintuition.library.
+
+@{b}Picasso96-Treiber für weitere Programme @{ub}
+
+Die  Picasso96-Treiber  für  Programme  wie  AdPro,  Photogenics, etc.
+finden   Sie   im   Picasso96-Ordner,   den   das  Installationsskript
+installiert.   Dort   finden   Sie  zu  jedem  Treiber  ein  passendes
+Installationsskript.
+
+@{"Die Dateien von Picasso96" link "PICASSO96FILES"}
+
+@ENDNODE
+
+@NODE "PICASSO96FILES" "Die Picasso96-Dateien"
+@{b}Die Picasso96 System-Software @{ub}
+
+Um  Picasso96  benutzen  zu  können,  müssen ein paar Dateien in Ihrem
+System installiert werden und für Ihr System konfiguriert werden.
+
+BEACHTEN SIE BITTE:
+Das Unterverzeichnis @{b}Picasso96 @{ub}ist unbedingt nötig!
+
+Folgende Dateien werden vom Installationsskript installiert: @{b}
+
+   Libs:Picasso96API.library
+   Libs:Picasso96/emulation.library
+   Libs:Picasso96/rtg.library
+   Devs:Picasso96Settings
+
+   SYS:Classes/datatypes/picture.datatype
+
+   Prefs/Picasso96Mode
+   Prefs/Picasso96Mode.info
+@{ub}
+Abhängig  davon,  welche  Grafikkarte(n)  Sie  benutzen noch eine oder
+mehrere der folgenden Dateien: @{b}
+
+   Devs:Monitors/PicassoIV          oder anderer Name einer Karte
+   Devs:Monitors/PicassoIV.info
+
+   Libs:Picasso96/CyberVision.card
+   Libs:Picasso96/CVision3D.card
+   Libs:Picasso96/Domino.card
+   Libs:Picasso96/Merlin.card
+   Libs:Picasso96/oMniBus.card
+   Libs:Picasso96/PicassoII.card
+   Libs:Picasso96/PicassoIV.card
+   Libs:Picasso96/Piccolo.card
+   Libs:Picasso96/PiccoloSD64.card
+   Libs:Picasso96/Pixel64.card
+   Libs:Picasso96/RetinaBLT.card
+   Libs:Picasso96/Spectrum.card
+@{ub}
+Je nachdem, was für VGA Grafikchips in ihrem System verwendet werden:
+
+ Picasso II(+), Piccolo und Spectrum 24/28 benötigen: @{b}
+   Libs:Picasso96/CirrusGD542X.chip
+@{ub}
+ Piccolo SD64 und Pixel 64 benötigen: @{b}
+   Libs:Picasso96/CirrusGD5434.chip
+@{ub}
+ Picasso IV benötigt: @{b}
+   Libs:Picasso96/CirrusGD5446.chip
+@{ub}
+ CyberVision 64 benötigt: @{b}
+   Libs:Picasso96/S3Trio.chip
+@{ub}
+ CyberVision 64/3D benötigt: @{b}
+   Libs:Picasso96/S3ViRGE.chip
+@{ub}
+ Domino und oMniBus benötigen: @{b}
+   Libs:Picasso96/TsengET4000.chip
+@{ub}
+ Merlin und oMniBus benötigen: @{b}
+   Libs:Picasso96/TsengET4000W32.chip
+@{ub}
+ Retina BLT Z3 benötigt: @{b}
+   Libs:Picasso96/NCR77C32BLT.chip
+@{ub}
+
+Eine Datei mit Auflösungen: @{b}
+   Devs:Picasso96Settings
+@{ub}
+Ein Testprogramm: @{b}
+   Picasso96/Debug/CheckBoards
+   Picasso96/Debug/CheckBoards.info
+@{ub}
+Diese Dokumentationstexte: @{b}
+   Picasso96/Picasso96_deutsch.guide
+   Picasso96/Picasso96_deutsch.guide.info
+   Picasso96/Picasso96_english.guide
+   Picasso96/Picasso96_english.guide.info
+@{ub}
+
+@{b}Applikationstreiber: @{ub}
+
+Der @{"ADPro" link "ADPRO"} Treiber: @{b}
+   Drivers/ADPro/Savers2/Picasso96
+@{ub}
+@{"Photogenics" link "PHOTOGENICS"} Treiber: @{b}
+   Drivers/Photogenics/data/GIO/Picasso96.gio
+@{ub}
+Der Video Treiber für @{"ShapeShifter" LINK "SHAPESHIFTER"}: @{b}
+   Drivers/ShapeShifter/Video Drivers/Picasso96
+@{ub}
+@{"XiPaint" link "XIPAINT"} Treiber: @{b}
+   Drivers/XiPaint/libs/xout_g.library
+@{ub}
+
+@ENDNODE
+
+@NODE "USAGE" "Benutzung von Picasso96"
+@{b}Die Benutzung von Picasso96 @{ub}
+
+Nachdem Sie Picasso96 installiert und den Rechner neu gestartet haben,
+wählen  Sie  einfach  im  Prefs-Programm  ScreenMode  einen  der neuen
+ScreenModes  aus.  Die  Workbench und andere Programme können nun Ihre
+Grafikkarte benutzen.
+
+Falls  Sie  unerwarteterweise  Probleme haben, Picasso96 in Betrieb zu
+nehmen,  verwenden  Sie  bitte  CheckBoards, um festzustellen, ob Ihre
+Karte  auch richtig erkannt und eingebunden wurde. Falls dies der Fall
+ist  und  Ihnen  trotzdem  keine  Picasso96  DisplayIDs  zur Verfügung
+stehen,  sollten  Sie  versuchen,  mit  Picasso96Mode  ein bestehendes
+Setting  an  Ihre Karte zu binden, indem Sie bei Picasso96Mode im Menü
+"Attach Setting to" Ihre Karte anwählen und dann abspeichern und einen
+Neustart auslösen.
+
+@ENDNODE
+
+@NODE "CONFIG" "Konfiguration"
+@{b}Die Picasso96 Konfiguration @{ub}
+
+Es gibt zwei Möglichkeiten, Picasso96 zu konfigurieren:
+
+    @{" Die ToolTypes der Monitor-Dateien " link "TOOLTYPES"}
+    @{"          Picasso96Mode            " link "PICASSO96MODE"}
+
+@ENDNODE
+
+@NODE "TOOLTYPES" "Die ToolTypes"
+@{b}Die ToolTypes der Monitordateien @{ub}
+
+Die  Monitor-Dateien, die in Devs:Monitors installiert werden, und den
+Namen der Grafikkarten tragen, z.B. PicassoIV, enthalten ToolTypes mit
+denen die entsprechenden Karten konfiguriert werden können:
+
+BoardType:    notwendig, legt den KartenTyp fest, z.B. PicassoIV. Wird
+              vom Installationsskript bereits richtig eingetragen.
+
+IgnoreMask:   optional, damit wird bei manchen Funktionen, die den
+              Blitter der Grafikkarte benutzen, die BitPlane-Maske
+              ignoriert, wodurch die Operationen auf manchen Karten
+              stark beschleunigt werden können. Allerdings ist das
+              dann nicht mehr völlig korrekt, wodurch unter Umständen
+              lästige Grafikfehler auftreten können! @{b}Damit eine
+              PicassoII mit Picasso96 genauso schnell scrollt wie mit
+              der alten Picasso-Software, müssen Sie diesen ToolType
+              auf YES setzten! @{ub}
+              Voreingestellt: 'No'.
+
+BorderBlank:  optional, setzt Rahmen (ohne: wie im System),
+
+BigSprite:    optional, wenn sie "Yes" angeben, wird der Mauszeiger
+              doppelt so groß dargestellt.
+
+SettingsFile: optional, voreingestellt ist "DEVS:Picasso96Settings",
+
+SoftSprite:   optional, "Yes": keinen Hardwaremauszeiger nehmen (falls
+              überhaupt möglich).
+
+DisplayChain: optional, "No": Amigasignal wird nicht durchgeschleift,
+              die Grafikkarte reicht immer das Signal der Karte weiter
+              (nützlich in Systemen mit mehreren Monitoren und Grafik-
+              karten).
+@ENDNODE
+
+@NODE "PICASSO96MODE" "Picasso96Mode"
+@{b}Picasso96Mode: Der Picasso96 Bildschirmmoduseinsteller@{ub}
+
+Picasso96Mode  wird  benutzt,  um  bestehende  Auflösungen anders ein-
+zustellen  und  um  neue  zu  erzeugen. Es ist ausschließlich über die
+grafische Benutzeroberfläche zu bedienen.
+
+Kurzanleitung:
+
+In  der oberen linken Ecke des Fensters sehen Sie vier Bedienelemente,
+die Ihnen folgendes erlauben:
+
+* neue  Objekte erzeugen (können Settings, Auflösungen oder Modi sein,
+  je  nachdem  auf  welche  der drei Listen sie das neue Objekt fallen
+  lassen),
+* ein Objekt zwischenzuspeichern und es danach wieder dort rausziehen,
+* eine Kopie eines Objekts zu erzeugen und
+* ein Objekt zu löschen.
+
+Aus jeder der drei Listen können Sie ein Element der Liste greifen, um
+es  dann zu den oben beschriebenen Bedienelementen zu ziehen. Dazu muß
+das  Element  mit  der  Maus  angewählt  und  dann  mit  einer zügigen
+horizontalen  Bewegung  bei  gedrückter linker Maustaste aus der Liste
+herausgezogen werden.
+
+Bevor  Sie einen Modus auf Ihrer Grafikkarte darstellen können, müssen
+Sie noch das aktuelle Setting dieser Karte mittels des Menüs zuweisen.
+
+Um  eine  Auflösung  oder  einen  Modus  zu  aktivieren, müssen sie es
+einfach  doppelt  mit  der  Maus  in der Liste anklicken. Ein erneuter
+Doppelklick  deaktiviert die Auflösung oder den Modus dann wieder. Nur
+die  aktiven  Auflösungen  und  Modi  sind  für  den  Rest des Systems
+sichtbar.
+
+Um einen Modus zu verändern, müssen Sie den Knopf "Edit" drücken, dann
+wird ein Testbild auf dem Mode gezeigt. Mit den Pfeiltasten können Sie
+nun:
+
+* den Mode verschieben (wenn Sie nur die Pfeiltasten drücken),
+* den  Rahmen  vergrössern/verkleinern  (wenn Sie zusätzlich noch eine
+  ALT Taste drücken) oder
+* zusammen mit der CONTROL-Taste die Videofrequenz verändern oder
+* die  Größe  des  Modus  verändern (wenn Sie zusätzlich noch eine der
+  SHIFT Tasten drücken); dies wird häufig nötig sein.
+
+Der Knopf "Test" öffnet ein Geometrietestbild mit dem Unterschied, daß
+hier nichts verändert werden kann.
+
+Zum  Abschluß  sollte  die  Konfiguration  dann gespeichert werden und
+danach  ein  Reset  ausgelöst  werden,  damit  die  Änderungen wirksam
+werden.
+
+@ENDNODE
+
+@NODE "PDT" "Picture DataType"
+@{b}Bilddatentyp @{ub}
+
+Der  original V40 picture.datatype, der bei der Workbench mitgeliefert
+wird,  unterstützt  nur planare Bitmaps und ist somit nicht kompatibel
+zu  chunky  Screens.  Der auf der Diskette enthaltene picture.datatype
+löst dieses Problem und unterstützt die v43 Erweiterungen.
+
+@ENDNODE
+
+@NODE "ADPRO" "Art Department Professional"
+@{b}Picasso96 ADPro Treiber @{ub}
+
+"The  Art  Department  Professional" wird mittels eines Moduls für die
+Speicherfunktion   unterstützt,   welches  noch  über  Kommandozeilen-
+parameter   kontrollierbar  ist.  Diese  gehorchen  folgendem  Muster:
+"TRUE/S,HI/S,R=RENDERED/S,B=BOARD/N,AUTO/S".
+
+TRUE:     erlaube nur 24 bit Echtfarben Modi,
+HI:       erlaube nur 15 und 16 bit Echtfarben Modi,
+RENDERED: erlaube nur 256 Farben Paletten Modi,
+BOARD:    benutze nur die spezifizierte Grafikkarte (Nummer der Karte),
+AUTO:     automatische Wahl des Modus'.
+
+Installation:  kopieren Sie Picasso96 in das "Savers2" Verzeichnis
+              Ihrer ADPro Installation.
+
+@ENDNODE
+
+@NODE "SHAPESHIFTER" "ShapeShifter"
+@{b}ShapeShifter @{ub}
+
+Der  Apple  Macintosh  Emulator  ShapeShifter wird mittels eines Video
+Treibers  unterstützt.  Es  wird  dafür  mindestens  ShapeShifter V3.1
+benötigt.   Die   256   Farben  Modi  werden  bei  allen  Grafikkarten
+unterstützt, während der Modus Tausende Farben nur mit Karten des Typs
+Picasso  IV oder Cybervison und der Modus Millionen Farben derzeit nur
+mit  Merlin  oder  CyberVision möglich ist. Für die Picasso IV ist der
+Millionen Farben Modus noch in der Entwicklung.
+
+ShapeShifter ist im AmiNet im Verzeichnis misc/emu zu finden oder kann
+direkt bezogen werden von:
+ Christian Bauer
+ Max-Planck-Str.60
+ 55124 Mainz
+ Germany
+EMail: cbauer@iphcip1.physik.uni-mainz.de
+
+Installation:
+
+Kopieren  Sie die Datei ShapeShifter/Picasso96 in die Schublade "Video
+Drivers"  Ihrer ShapeShifter Installation. Wählen sie bei ShapeShifter
+Picasso96 als externen Videotreiber.
+
+@ENDNODE
+
+@NODE "PHOTOGENICS" "Photogenics"
+@{b}Photogenics driver @{ub}
+
+Für  Photogenics (von Almathera) existiert ein Speichermodul. Es wurde
+bisher  nur mit PhotoGenics 1.2 getestet, sollte aber auch mit anderen
+Versionen funktionieren.
+
+Installation:
+
+Kopieren Sie einfach nur die Datei Picasso96.gio nach
+PHOTOGENICS:data/GIO.
+
+@ENDNODE
+
+@NODE "EMULATION" "emulation.library"
+@{b}Unterstützung für andere Grafikkarten Software Systeme @{ub}
+
+Die  beigefügte  emulation.library  stellt  Funktionen zur Nachbildung
+fremder Programmierschnittstellen wie etwa des CyberGraphX Systems und
+der  vilintuisup.library  zur Verfügung und ist für Programme gedacht,
+die  zum  Beispiel  eine CyberGraphX Systemumgebung erwarten und diese
+für  Echtfarbendarstellung  unter  Intuition  benutzen  (z.B. ImageFX,
+Photogenics oder CyberWindow).
+
+Es   sollten   einige  Programme  damit  funktionieren,  die  nur  die
+dokumentierten  Funktionen  der Bibliothek benutzen und keine Annahmen
+über  ihre  interne  Struktur voraussetzen (z.B.  picture.datatype V43
+von Ralph Schmidt).
+
+Installation:
+
+Kopieren Sie die emulation.library nach LIBS:Picasso96
+
+@ENDNODE
+
+@NODE "DEVELOP" "Entwickler"
+@TOC "MAIN"
+@{b}Sie wollen mit Ihrer Software Picasso96 unterstützen? @{ub}
+
+Das Picasso96 Entwickler Archiv kann von der Picasso96 WWW Home Page
+  http://picasso96.home.pages.de/
+                 alias
+  http://picasso96.cogito.de/
+abgerufen werden.
+
+Wenn Sie keinen Internet Zugang haben, kann @{"ich" link "AUTHORS"} Ihnen die Datei auch
+zuschicken.
+
+Bitte benachrichtigen Sie mich, wenn sie einen Treiber schreiben, 
+damit wir einen Überblick über die existierende Unterstützung behalten.
+Wenn möglich, senden Sie uns bitte ein Exemplar zu Testzwecken. Danke!
+
+@ENDNODE
+
+@NODE "AUTHORS" "Autoren"
+@TOC "MAIN"
+@{b}Wer hat Picasso96 entwickelt? @{ub}
+
+ @{b}Tobias Abt @{ub}
+ Bessererstraße 9
+ 89073 Ulm
+ Deutschland
+ EMail:   tabt@gmx.de (bevorzugt)
+ WWW:     http://home.pages.de/~tabt/
+ IRC:     tabt@#AmigaGer
+
+und
+ 
+ @{b}Alexander Kneer @{ub}
+ Masurenweg 6a
+ 89233 Neu-Ulm Pfuhl
+ Deutschland
+ EMail:   alexander.kneer@gmx.de
+
+
+@{b}Treiber: @{ub}
+CyberVision64 und S3Trio64: Michael Teske
+PiccoloSD64 und CirrusGD5434: Niels Knoop
+
+@{b}Übersetzungen: @{ub}
+italienisch: Mario Dell'Oca
+finnisch: Mikko Virtanen
+
+@ENDNODE
+
+@NODE "DISTRIB" "Vertrieb"
+@TOC "MAIN"
+@{b}Wie kann man Picasso96 bekommen? @{ub}
+
+Picasso96  ist  ShareWare.  Die ShareWare Gebühr beträgt DM 30 oder US
+$20. Bitte schicken Sie das Geld bar oder als Scheck an:
+ Kneer & Abt GbR.
+ Masurenweg 6a
+ 89233 Neu-Ulm Pfuhl
+ Deutschland
+
+Oder überweisen Sie den Betrag auf folgendes Konto:
+ Kneer & Abt
+ Kontonummer 71352
+ bei Sparkasse Ulm
+ BLZ 630 500 00
+ 
+Bitte  haben  Sie  Verständnis, daß wir wegen des hohen Aufwands keine
+schriftlichen Bestätigungen per Brief verschicken, auf Wunsch schicken
+wir  aber gern eine kurze EMail. Wenn Sie noch die neueste Version von
+Picasso96   und  der  Entwicklerdokumentation  auf  Diskette  erhalten
+wollen,  schicken  Sie bitte zusätzlich DM 6 oder US $4. Vergessen Sie
+bitte nicht, Ihre Adresse beizufügen.
+
+Im Internet finden Sie @{b}Picasso96 @{ub} auf der @{b}Picasso96 WWW Home Page @{ub}:
+  http://picasso96.home.pages.de/
+                   alias
+  http://picasso96.cogito.de/
+
+oder im @{b}AmiNet @{ub}z.B.:
+  ftp.uni-stuttgart.de:/pub/systems/amiga/aminet/gfx/board/Picasso96.lha
+
+@{b}Bug-Reports @{ub}an:
+  tabt@gmx.de (ich werde wohl leider nicht auf jede
+  Mail reagieren können, da ich die Mails alleine bearbeiten muß...)
+
+Bei @{b}Problemen @{ub}
+  stellen Sie Ihre Fragen in der Picasso-Mailingliste, ich hoffe, daß
+  Ihnen dort jemand helfen kann. Ich lese diese Liste auch, bin aber
+  auch sonst ziemlich ausgelastet...
+  Die Picasso-Mailingliste wird auf auf Englisch über ninemoons.com
+  geführt, bei Interesse bitte eine EMail an majordomo@ninemoons.com
+  mit dem Stichwort "Help" in der Nachricht. Wenn Sie sich eintragen
+  lassen wollen, reicht eine Mail mit "subscribe Picasso" im Rumpf an
+  majordomo@ninemoons.com.
+  
+@ENDNODE
+
