@@ -11,6 +11,8 @@ Picasso96 package is based on Picasso96.lha from http://aminet.net/driver/video/
 
 It has been converted to a package for HstWB Installer and automatically installs Picasso96 as described in "Chapter 5 - How to Install Picasso96" here http://guide.abime.net/wb3.1/chap5.htm written by Paul, The Green Amiga Alien.
 
+Currently only uaegfx card is installed.
+
 ## Requirements
 
 Picasso96 package has following requirements:
@@ -27,6 +29,8 @@ Picasso96 package has following requirements:
 Download latest release from https://github.com/henrikstengaard/picasso96-package/releases and copy it to HstWB Installer "packages" directory, which typically is "c:\Program Files (x86)\HstWB Installer\Packages".
 
 Installation through HstWB Installer will install and configure Picasso96 package using defined assigns.
+
+
 
 ## Assigns
 
