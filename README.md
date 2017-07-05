@@ -1,15 +1,15 @@
 # Picasso96 package
 
-Picasso96 package contains all you need to get Picasso96.
+Picasso96 package contains all you need to get Picasso96 up and running on your Amiga.
 
 Picasso96 offers support for many different Amiga graphics boards, has builtin HiColor and TrueColor support for intuition screens and much
 more.
 
 ## Description
 
-Picasso96 package is based on Picasso96.lha from http://guide.abime.net/ by Paul, The Green Amiga Alien.
+Picasso96 package is based on Picasso96.lha from http://aminet.net/driver/video/Picasso96.lha and updated rtg.library v40.3993 from http://guide.abime.net/wb3.1/files/Picasso96.lha created by Paul, The Green Amiga Alien.
 
-It has been converted to a package for HstWB Installer and automatically installs Picasso96 as described in "Chapter 5 - How to Install Picasso96" here http://guide.abime.net/wb3.1/chap5.htm.
+It has been converted to a package for HstWB Installer and automatically installs Picasso96 as described in "Chapter 5 - How to Install Picasso96" here http://guide.abime.net/wb3.1/chap5.htm written by Paul, The Green Amiga Alien.
 
 ## Requirements
 
