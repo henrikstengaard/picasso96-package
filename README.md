@@ -30,7 +30,7 @@ Download latest release from https://github.com/henrikstengaard/picasso96-packag
 
 Installation through HstWB Installer will install and configure Picasso96 package using defined assigns.
 
-
+During installation a dialog will ask to update screenmode prefs with display mode set to "UAE:1024x 768 16bit PC" as a default screenmode for Picasso 96.
 
 ## Assigns
 

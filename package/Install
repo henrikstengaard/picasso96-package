@@ -75,7 +75,7 @@ ELSE
 ENDIF
 
 
-; Update screenmode to  picasso 96 screenmode prefs with display mode set to "UAE:1024x 768 16bit PC"
+; Update screenmode to picasso 96 screenmode prefs with display mode set to "UAE:1024x 768 16bit PC"
 set updatescreenmode `RequestChoice "Update screenmode" "Do you want to update screenmode prefs with display mode*Nset to *"UAE:1024x 768 16bit PC*"?" "Yes|No"`
 IF "$updatescreenmode" EQ "1"
   Copy >NIL: "PACKAGEDIR:screenmode.prefs" "SYSTEMDIR:Prefs/Env-Archive/Sys"
