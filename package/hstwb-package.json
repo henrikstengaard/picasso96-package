@@ -1,0 +1,10 @@
+{
+    "name": "Picasso96",
+    "version": "1.0.0",
+    "assigns":
+    [
+        {
+            "name": "SYSTEMDIR"
+        }
+    ]
+}
