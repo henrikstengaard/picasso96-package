@@ -2,7 +2,7 @@
 ; --------------------------------
 ;
 ; Author: Henrik Noerfjand Stengaard
-; Date: 2017-07-05
+; Date: 2021-11-10
 ;
 ; This script installs Picasso96 for Workbench 3.0+. 
 
@@ -63,19 +63,25 @@ Echo "No" NOLINE >SYSTEMDIR:Prefs/Env-Archive/Picasso96/DisableAmigaBlitter
 Echo "No*NDo not enable!*NOnly useful for the rtg.library developers." NOLINE >SYSTEMDIR:Prefs/Env-Archive/Picasso96/Debug
 Echo "No*NDo not enable!*NOnly useful for the rtg.library developers." NOLINE >SYSTEMDIR:Prefs/Env-Archive/Picasso96/Experimental
 
+; set picasso96 dir
+set picasso96dir "`execute INSTALLDIR:S/CombinePath "$systemdir" "Storage/Picasso96"`"
 
-; Update or add picasso 96 assign in user startup
+; update or add picasso96 assign in user startup
 IF EXISTS "SYSTEMDIR:S/User-Startup"
-  echo "$demospath" >T:demospath
-  set demospath "`sed "s/\//\\\//g" T:demospath`"
-  sed "s/\([Pp][Ii][Cc][Aa][Ss][Ss][Oo]:\)/;\1/" "SYSTEMDIR:S/User-Startup" >"T:User-Startup"
-  copy >NIL: "T:User-Assign" "SYSTEMDIR:S/User-Assign" 
+  search "SYSTEMDIR:S/User-Startup" "Assign Picasso96:" >NIL:
+  IF $RC EQ 0 VAL
+    echo "$picasso96dir" >T:_picasso96dir
+    set picasso96dir "`sed "s/\//\\\//g" T:_picasso96dir`"
+    sed "s/\([Pp][Ii][Cc][Aa][Ss][Ss][Oo]96:\)/\1 $picasso96dir;/" "SYSTEMDIR:S/Assign-Startup" >"T:Assign-Startup"
+    copy >NIL: "T:Assign-Startup" "SYSTEMDIR:S/Assign-Startup"
+  ELSE
+    Echo "Assign Picasso96: *"$picasso96dir*"" >>SYSTEMDIR:S/User-Startup
+  ENDIF
 ELSE
-  Echo "Assign Picasso96: *"SYS:Storage/Picasso96*"" >SYSTEMDIR:S/User-Startup
+  Echo "Assign Picasso96: *"$picasso96dir*"" >>SYSTEMDIR:S/User-Startup
 ENDIF
 
-
-; Update screenmode to picasso 96 screenmode prefs with display mode set to "UAE:1024x 768 16bit PC"
+; update screenmode to picasso 96 screenmode prefs with display mode set to "UAE:1024x 768 16bit PC"
 set updatescreenmode `RequestChoice "Update screenmode" "Do you want to update screenmode prefs with display mode*Nset to *"UAE:1024x 768 16bit PC*"?" "Yes|No"`
 IF "$updatescreenmode" EQ "1"
   Copy >NIL: "PACKAGEDIR:screenmode.prefs" "SYSTEMDIR:Prefs/Env-Archive/Sys"
